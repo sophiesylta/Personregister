@@ -25,6 +25,7 @@ namespace Personregister.WebAPI.Controllers
         [HttpPost(Name = "PostPerson")]
         public Person Post(Person person)
         {
+            _logger.LogDebug($"Legger til ny person {person.Fornavn}");
             person = _personRepository.add(person);
 
             return person;
