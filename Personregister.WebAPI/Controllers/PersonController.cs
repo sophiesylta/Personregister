@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Personregister.WebAPI.Models;
 
 namespace Personregister.WebAPI.Controllers
 {
@@ -8,8 +9,8 @@ namespace Personregister.WebAPI.Controllers
     {
         private static List<Person> personListe = new List<Person>()
         {
-            new Person(){Fornavn = "Sophie", Etternavn = "Sylta" },
-            new Person() { Fornavn = "Trond", Etternavn = "Århus" }
+            new Person(){Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 },
+            new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 }
         };
 
         private readonly ILogger<PersonController> _logger;

@@ -1,4 +1,4 @@
-namespace Personregister.WebAPI
+namespace Personregister.WebAPI.Models
 {
     public class WeatherForecast
     {
