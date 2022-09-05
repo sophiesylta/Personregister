@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 
- builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+ builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));
 
 
 var app = builder.Build();

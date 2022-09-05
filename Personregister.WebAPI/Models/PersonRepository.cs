@@ -5,10 +5,13 @@
         public PersonRepository(Personregistercontext personregistercontext)
         {
             this.personregistercontext = personregistercontext;
-            this.personregistercontext.Personer.Add(new Person() { Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 });
-            this.personregistercontext.Personer.Add(new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 });
+            if (personregistercontext.Personer.Count() == 0)
+            {
+                this.personregistercontext.Personer.Add(new Person() { Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 });
+                this.personregistercontext.Personer.Add(new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 });
 
-            this.personregistercontext.SaveChanges();
+                this.personregistercontext.SaveChanges();
+            }
         }
 
         //private List<Person> personListe = new List<Person>()
