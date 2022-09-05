@@ -1,4 +1,6 @@
 using Personregister.WebAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+
+
+ builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+
 
 var app = builder.Build();
 
