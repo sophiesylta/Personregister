@@ -7,31 +7,27 @@ namespace Personregister.WebAPI.Controllers
     [Route("[controller]")]
     public class PersonController : ControllerBase
     {
-        private static List<Person> personListe = new List<Person>()
-        {
-            new Person(){Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 },
-            new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 }
-        };
-
         private readonly ILogger<PersonController> _logger;
+        private readonly IPersonRepository _personRepository;
 
-        public PersonController(ILogger<PersonController> logger)
+        public PersonController(ILogger<PersonController> logger, IPersonRepository personRepository)
         {
             _logger = logger;
+            _personRepository = personRepository;
         }
 
         [HttpGet(Name = "GetPerson")]
         public IEnumerable<Person> Get()
         {
-            return personListe;
+            return _personRepository.getAll();
         }
 
         [HttpPost(Name = "PostPerson")]
-        public IEnumerable<Person> Post(Person person)
+        public Person Post(Person person)
         {
-            personListe.Add(person);
+            person = _personRepository.add(person);
 
-            return personListe;
+            return person;
         }
     }
 }
