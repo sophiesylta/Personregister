@@ -15,12 +15,11 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
             personregistercontext = Personregistercontext;
             _logger = logger;
-
-            if (personregistercontext.Fødsler.Count() == 0)
+        
+            if (personregistercontext.Fødsler.Count() < 3)
             {
                 _logger.LogInformation("ingen fødsler opprettet, legger til");
-                personregistercontext.Fødsler.Add(new Fødsel() { mor = new Person() { Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 }, far = new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 }, fødselTid = new DateTime(2022, 12, 24, 7, 0, 0), barn = new Person() { Fornavn = "Eva", Etternavn = "Århus", Personnummer = 56756756756 } });
-                personregistercontext.SaveChanges();
+                add(new Fødsel() { mor = new Person() { Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 }, far = new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 }, fødselTid = new DateTime(2022, 12, 24, 7, 0, 0), barn = new Person() { Fornavn = "Eva", Etternavn = "Århus", Personnummer = 56756756756 } });
             }
             else
             {
@@ -30,6 +29,19 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
         public Fødsel add(Fødsel fødsel)
         {
+            //sjekk om moreksisterer, i så fall bruk denne. Ellers opprett ny
+            var mor = personregistercontext.Personer.Where(e => e.Personnummer == fødsel.mor.Personnummer).FirstOrDefault();
+            if (mor != null)
+            {
+                fødsel.mor = mor;
+            }
+            //Sjekk om far eksisterer, i så fall bruk denne, ellers opprett ny
+            var far = personregistercontext.Personer.Where(e => e.Personnummer == fødsel.far.Personnummer).FirstOrDefault();
+            if (far != null)
+            {
+                fødsel.far = far;
+            }
+
             personregistercontext.Fødsler.Add(fødsel);
             personregistercontext.SaveChanges();
             return fødsel;
