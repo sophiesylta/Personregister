@@ -4,7 +4,10 @@
     {
         public PersonRepository(Personregistercontext personregistercontext)
         {
+
             this.personregistercontext = personregistercontext;
+            this.personregistercontext.Database.EnsureCreated();
+
             if (personregistercontext.Personer.Count() == 0)
             {
                 this.personregistercontext.Personer.Add(new Person() { Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 });

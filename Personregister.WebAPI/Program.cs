@@ -14,8 +14,9 @@ builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IFødselRepository, FødselRepository>();
 
 
- builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));
+//builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));
 
+builder.Services.AddDbContext<Personregistercontext>(options => options.UseSqlServer("Data Source = 127.0.0.1, 1401; Initial Catalog = Personregister; User ID = SA; Password = Password9!"));
 
 var app = builder.Build();
 
