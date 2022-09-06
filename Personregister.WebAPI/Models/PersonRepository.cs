@@ -6,7 +6,7 @@
         {
 
             this.personregistercontext = personregistercontext;
-            this.personregistercontext.Database.EnsureCreated();
+            //this.personregistercontext.Database.EnsureCreated();
 
             if (personregistercontext.Personer.Count() == 0)
             {
