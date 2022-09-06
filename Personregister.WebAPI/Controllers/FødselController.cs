@@ -10,7 +10,7 @@ namespace Personregister.WebAPI.Controllers
     {
         private static List<Fødsel> fødselListe = new List<Fødsel>()
         {
-            new Fødsel(){mor = new Person() {Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312}, far = new Person() {Fornavn = "Trond", Etternavn = "Århus", Personnummer = 12312312312}, fødselTid = new DateTime(2022, 12, 24, 7, 0, 0), barn = new Person() {Fornavn = "Eva", Etternavn = "Århus", Personnummer = 56756756756} }
+          new Fødsel(){mor = new Person() {Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312}, far = new Person() {Fornavn = "Trond", Etternavn = "Århus", Personnummer = 12312312312}, fødselTid = new DateTime(2022, 12, 24, 7, 0, 0), barn = new Person() {Fornavn = "Eva", Etternavn = "Århus", Personnummer = 56756756756} }
 
         };
 
