@@ -2,5 +2,7 @@
 {
     public interface IDødsfallRepository
     {
+        List<Dødsfall> GetAll();
+        Dødsfall add(Dødsfall dødsfall);
     }
 }

@@ -12,5 +12,7 @@ namespace Personregister.Infrastructure.Persistence.Context
 
         public DbSet<Fødsel> Fødsler { get; set; }
 
+        public DbSet<Dødsfall> Dødsfall { get; set; }
+
     }
 }

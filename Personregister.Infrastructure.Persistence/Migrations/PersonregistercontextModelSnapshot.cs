@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Personregister.Infrastructure.Persistence.Context;
 
 #nullable disable
 
-namespace Personregister.WebAPI.Migrations
+namespace Personregister.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(Personregistercontext))]
-    [Migration("20220906070309_init")]
-    partial class init
+    partial class PersonregistercontextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +22,32 @@ namespace Personregister.WebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Personregister.WebAPI.Models.Fødsel", b =>
+            modelBuilder.Entity("Personregister.Domene.Dødsfall", b =>
+                {
+                    b.Property<int>("DødsfallId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DødsfallId"), 1L, 1);
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("dødsTid")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("dødsårsak")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DødsfallId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Dødsfall");
+                });
+
+            modelBuilder.Entity("Personregister.Domene.Fødsel", b =>
                 {
                     b.Property<int>("FødselId")
                         .ValueGeneratedOnAdd()
@@ -55,7 +78,7 @@ namespace Personregister.WebAPI.Migrations
                     b.ToTable("Fødsler");
                 });
 
-            modelBuilder.Entity("Personregister.WebAPI.Models.Person", b =>
+            modelBuilder.Entity("Personregister.Domene.Person", b =>
                 {
                     b.Property<int>("PersonId")
                         .ValueGeneratedOnAdd()
@@ -74,6 +97,10 @@ namespace Personregister.WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Kallenavn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("Personnummer")
                         .HasColumnType("bigint");
 
@@ -82,17 +109,28 @@ namespace Personregister.WebAPI.Migrations
                     b.ToTable("Personer");
                 });
 
-            modelBuilder.Entity("Personregister.WebAPI.Models.Fødsel", b =>
+            modelBuilder.Entity("Personregister.Domene.Dødsfall", b =>
                 {
-                    b.HasOne("Personregister.WebAPI.Models.Person", "barn")
+                    b.HasOne("Personregister.Domene.Person", "person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("person");
+                });
+
+            modelBuilder.Entity("Personregister.Domene.Fødsel", b =>
+                {
+                    b.HasOne("Personregister.Domene.Person", "barn")
                         .WithMany()
                         .HasForeignKey("barnPersonId");
 
-                    b.HasOne("Personregister.WebAPI.Models.Person", "far")
+                    b.HasOne("Personregister.Domene.Person", "far")
                         .WithMany()
                         .HasForeignKey("farPersonId");
 
-                    b.HasOne("Personregister.WebAPI.Models.Person", "mor")
+                    b.HasOne("Personregister.Domene.Person", "mor")
                         .WithMany()
                         .HasForeignKey("morPersonId");
 

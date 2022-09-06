@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Personregister.Domene;
+using Personregister.Domene.Repository;
 using Personregister.WebAPI.Models;
 using System;
 
@@ -9,6 +10,8 @@ namespace Personregister.WebAPI.Controllers
     [Route("[controller]")]
     public class DødsfallController : ControllerBase
     {
+        private readonly IDødsfallRepository dødsfallRepository;
+
         private static List<Dødsfall> dødsfallListe = new List<Dødsfall>()
         {
             new Dødsfall(){person = new Person() {Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312}, dødsTid = new DateTime(2022, 12, 24, 7, 0, 0), dødsårsak = "Ukjent" },
@@ -17,23 +20,25 @@ namespace Personregister.WebAPI.Controllers
 
         private readonly ILogger<DødsfallController> _logger;
 
-        public DødsfallController(ILogger<DødsfallController> logger)
+        public DødsfallController(ILogger<DødsfallController> logger, IDødsfallRepository dødsfallRepository)
         {
             _logger = logger;
+            this.dødsfallRepository = dødsfallRepository;
         }
 
         [HttpGet(Name = "GetDødsfall")]
         public IEnumerable<Dødsfall> Get()
         {
-            return dødsfallListe;
+            return dødsfallRepository.GetAll();
         }
 
         [HttpPost(Name = "PostDødsfall")]
-        public IEnumerable<Dødsfall> Post(Dødsfall dødsfall)
+        public Dødsfall Post(Dødsfall dødsfall)
         {
-            dødsfallListe.Add(dødsfall);
 
-            return dødsfallListe;
+            dødsfall = dødsfallRepository.add(dødsfall);
+
+            return dødsfall;
         }
     }
 }

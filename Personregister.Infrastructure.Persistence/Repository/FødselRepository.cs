@@ -29,7 +29,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
         public Fødsel add(Fødsel fødsel)
         {
-            //sjekk om moreksisterer, i så fall bruk denne. Ellers opprett ny
+            //sjekk om mor eksisterer, i så fall bruk denne, ellers opprett ny
             var mor = personregistercontext.Personer.Where(e => e.Personnummer == fødsel.mor.Personnummer).FirstOrDefault();
             if (mor != null)
             {

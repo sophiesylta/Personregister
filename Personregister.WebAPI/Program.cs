@@ -14,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IFødselRepository, FødselRepository>();
+builder.Services.AddScoped<IDødsfallRepository, DødsfallRepository>();
 
 
 //builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));
@@ -27,6 +28,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+// oppdatere database når programmet starter (istedet for å bruke
+// "Update-Database  -project Personregister.WebAPI -startupproject Personregister.WebAPI  -Context Personregistercontext"
+// i Package Manager Console)
+using (var serviceScope = app.Services.CreateScope())
+{
+    var uttrekkDbContext = serviceScope.ServiceProvider.GetRequiredService<Personregistercontext>();
+    uttrekkDbContext?.Database.Migrate();
 }
 
 app.UseHttpsRedirection();

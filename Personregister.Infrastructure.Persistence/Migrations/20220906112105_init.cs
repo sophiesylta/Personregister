@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Personregister.WebAPI.Migrations
+namespace Personregister.Infrastructure.Persistence.Migrations
 {
     public partial class init : Migration
     {
@@ -18,11 +18,33 @@ namespace Personregister.WebAPI.Migrations
                     Fornavn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Etternavn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Personnummer = table.Column<long>(type: "bigint", nullable: false),
+                    Kallenavn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Personer", x => x.PersonId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Dødsfall",
+                columns: table => new
+                {
+                    DødsfallId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    dødsårsak = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dødsTid = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dødsfall", x => x.DødsfallId);
+                    table.ForeignKey(
+                        name: "FK_Dødsfall_Personer_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Personer",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +79,11 @@ namespace Personregister.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dødsfall_PersonId",
+                table: "Dødsfall",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Fødsler_barnPersonId",
                 table: "Fødsler",
                 column: "barnPersonId");
@@ -74,6 +101,9 @@ namespace Personregister.WebAPI.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Dødsfall");
+
             migrationBuilder.DropTable(
                 name: "Fødsler");
 
