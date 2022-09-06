@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Personregister.Domene;
 
-namespace Personregister.WebAPI.Models
+namespace Personregister.Infrastructure.Persistence.Context
 {
     public class Personregistercontext : DbContext
     {
-    
+
         public Personregistercontext(DbContextOptions<Personregistercontext> options) : base(options) { }
 
         public DbSet<Person> Personer { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Personregister.WebAPI.Models
+﻿namespace Personregister.Domene.Repository
 {
     public interface IDødsfallRepository
     {

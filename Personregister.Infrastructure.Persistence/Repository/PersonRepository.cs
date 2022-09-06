@@ -1,6 +1,8 @@
 ﻿using Personregister.Domene;
+using Personregister.Domene.Repository;
+using Personregister.Infrastructure.Persistence.Context;
 
-namespace Personregister.WebAPI.Models
+namespace Personregister.Infrastructure.Persistence.Repository
 {
     public class PersonRepository : IPersonRepository
     {
@@ -29,8 +31,8 @@ namespace Personregister.WebAPI.Models
         public Person add(Person person)
         {
 
-            this.personregistercontext.Personer.Add(person);
-            this.personregistercontext.SaveChanges();
+            personregistercontext.Personer.Add(person);
+            personregistercontext.SaveChanges();
             //   personListe.Add(person);
 
             return person;
@@ -40,7 +42,7 @@ namespace Personregister.WebAPI.Models
         {
             //  return personListe;
 
-            return this.personregistercontext.Personer.ToList();
+            return personregistercontext.Personer.ToList();
 
         }
     }

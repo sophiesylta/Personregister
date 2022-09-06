@@ -1,6 +1,8 @@
-using Personregister.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory;
+using Personregister.Infrastructure.Persistence.Context;
+using Personregister.Infrastructure.Persistence.Repository;
+using Personregister.Domene.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

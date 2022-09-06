@@ -1,7 +1,9 @@
-﻿using Personregister.Domene;
-using Personregister.WebAPI.Controllers;
+﻿using Microsoft.Extensions.Logging;
+using Personregister.Domene;
+using Personregister.Domene.Repository;
+using Personregister.Infrastructure.Persistence.Context;
 
-namespace Personregister.WebAPI.Models
+namespace Personregister.Infrastructure.Persistence.Repository
 {
     public class FødselRepository : IFødselRepository
     {
@@ -10,9 +12,9 @@ namespace Personregister.WebAPI.Models
 
         public FødselRepository(ILogger<FødselRepository> logger, Personregistercontext Personregistercontext)
         {
-            
-            this.personregistercontext = Personregistercontext;
-            this._logger = logger;
+
+            personregistercontext = Personregistercontext;
+            _logger = logger;
 
             if (personregistercontext.Fødsler.Count() == 0)
             {
@@ -20,7 +22,8 @@ namespace Personregister.WebAPI.Models
                 personregistercontext.Fødsler.Add(new Fødsel() { mor = new Person() { Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 }, far = new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 }, fødselTid = new DateTime(2022, 12, 24, 7, 0, 0), barn = new Person() { Fornavn = "Eva", Etternavn = "Århus", Personnummer = 56756756756 } });
                 personregistercontext.SaveChanges();
             }
-            else {
+            else
+            {
                 _logger.LogInformation("fant fødsler");
             }
         }
