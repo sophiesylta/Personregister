@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Personregister.Domene;
 
 namespace Personregister.WebAPI.Models
 {

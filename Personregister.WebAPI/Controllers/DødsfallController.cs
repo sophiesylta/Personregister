@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Personregister.Domene;
 using Personregister.WebAPI.Models;
 using System;
 

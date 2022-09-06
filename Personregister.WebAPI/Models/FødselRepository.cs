@@ -1,4 +1,5 @@
-﻿using Personregister.WebAPI.Controllers;
+﻿using Personregister.Domene;
+using Personregister.WebAPI.Controllers;
 
 namespace Personregister.WebAPI.Models
 {

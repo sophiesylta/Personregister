@@ -1,9 +1,9 @@
-﻿namespace Personregister.WebAPI.Models
+﻿namespace Personregister.Domene
 {
     public class Person
     {
         public int PersonId { get; set; }
-        
+
         public string Fornavn { get; set; }
         public string Etternavn { get; set; }
         public long Personnummer { get; set; }

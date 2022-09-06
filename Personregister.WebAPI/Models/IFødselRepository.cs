@@ -1,4 +1,6 @@
-﻿namespace Personregister.WebAPI.Models
+﻿using Personregister.Domene;
+
+namespace Personregister.WebAPI.Models
 {
     public interface IFødselRepository
     {
