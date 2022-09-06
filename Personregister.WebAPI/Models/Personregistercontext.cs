@@ -9,5 +9,7 @@ namespace Personregister.WebAPI.Models
 
         public DbSet<Person> Personer { get; set; }
 
+        public DbSet<Fødsel> Fødsler { get; set; }
+
     }
 }

@@ -15,24 +15,26 @@ namespace Personregister.WebAPI.Controllers
         };
 
         private readonly ILogger<FødselController> _logger;
+        private readonly IFødselRepository _fødselRepository;
 
-        public FødselController(ILogger<FødselController> logger)
+        public FødselController(ILogger<FødselController> logger, IFødselRepository fødselRepository)
         {
             _logger = logger;
+            _fødselRepository = fødselRepository;
         }
 
         [HttpGet(Name = "GetFødsel")]
         public IEnumerable<Fødsel> Get()
         {
-            return fødselListe;
+            return _fødselRepository.getAll();
         }
 
         [HttpPost(Name = "PostFødsel")]
-        public IEnumerable<Fødsel> Post(Fødsel fødsel)
+        public Fødsel Post(Fødsel fødsel)
         {
-            fødselListe.Add(fødsel);
+           fødsel = _fødselRepository.add(fødsel);
 
-            return fødselListe;
+            return fødsel;
         }
     }
 }

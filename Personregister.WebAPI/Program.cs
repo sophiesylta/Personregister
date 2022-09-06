@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IFødselRepository, FødselRepository>();
 
 
  builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));
