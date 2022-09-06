@@ -3,7 +3,7 @@ Disse kommandoen utføerer migrering og oppdatering av databasen:
 
 
 eksempler:
-Add-migration init -project Personregister.WebAPI -startupproject Personregister.WebAPI -Context Personregistercontext
+Add-migration kallenavn -project Personregister.WebAPI -startupproject Personregister.WebAPI -Context Personregistercontext
 Update-Database  -project Personregister.WebAPI -startupproject Personregister.WebAPI  -Context Personregistercontext
 
 
