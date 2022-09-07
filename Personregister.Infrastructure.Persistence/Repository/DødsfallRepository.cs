@@ -18,7 +18,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
         public Dødsfall add(Dødsfall dødsfall)
         {
             
-            //sjekk om dødsfall eksisterer, i så fall, bruk dette, ellers opprett nytt
+            //sjekk om dødsfall eksisterer, i så fall, returneres dette, ellers opprett nytt
             var d = personregistercontext.Dødsfall.FirstOrDefault(x => x.person.Personnummer == dødsfall.person.Personnummer);
 
             if (d != null) return dødsfall;

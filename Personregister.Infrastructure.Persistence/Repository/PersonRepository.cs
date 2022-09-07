@@ -32,6 +32,13 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
         public Person add(Person person)
         {
+            //Sjekke om person eksisterer, i så fall returneres denne, ellers opprett ny
+            var p = personregistercontext.Personer.FirstOrDefault(e => e.Personnummer == person.Personnummer);
+
+            if (p != null) 
+            {
+                return person;    
+            }
 
             personregistercontext.Personer.Add(person);
             personregistercontext.SaveChanges();
