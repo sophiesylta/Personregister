@@ -5,6 +5,7 @@ using Personregister.Infrastructure.Persistence.Context;
 
 namespace Personregister.Infrastructure.Persistence.Repository
 {
+
     public class FødselRepository : IFødselRepository
     {
         private readonly ILogger<FødselRepository> _logger;

@@ -6,6 +6,8 @@ namespace Personregister.Infrastructure.Persistence.Repository
 {
     public class PersonRepository : IPersonRepository
     {
+        private readonly Personregistercontext personregistercontext;
+
         public PersonRepository(Personregistercontext personregistercontext)
         {
 
@@ -26,7 +28,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
         //    new Person(){Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 },
         //    new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 }
         //};
-        private readonly Personregistercontext personregistercontext;
+
 
         public Person add(Person person)
         {
