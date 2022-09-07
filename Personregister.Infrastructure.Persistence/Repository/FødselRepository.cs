@@ -30,19 +30,6 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
         public Fødsel add(Fødsel fødsel)
         {
-            //sjekk om mor eksisterer, i så fall bruk denne, ellers opprett ny
-            var mor = personregistercontext.Personer.Where(e => e.Personnummer == fødsel.mor.Personnummer).FirstOrDefault();
-            if (mor != null)
-            {
-                fødsel.mor = mor;
-            }
-            //Sjekk om far eksisterer, i så fall bruk denne, ellers opprett ny
-            var far = personregistercontext.Personer.Where(e => e.Personnummer == fødsel.far.Personnummer).FirstOrDefault();
-            if (far != null)
-            {
-                fødsel.far = far;
-            }
-
             personregistercontext.Fødsler.Add(fødsel);
             personregistercontext.SaveChanges();
             return fødsel;
@@ -51,6 +38,11 @@ namespace Personregister.Infrastructure.Persistence.Repository
         public List<Fødsel> getAll()
         {
             return personregistercontext.Fødsler.ToList();
+        }
+
+        public Person getPerson(long personnummer)
+        {
+            return personregistercontext.Personer.Where(e => e.Personnummer == personnummer).FirstOrDefault();
         }
     }
 }

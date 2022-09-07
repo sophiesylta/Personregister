@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
+using Personregister.WebAPI.Models;
 
 namespace Personregister.WebAPI.Controllers
 {
@@ -18,9 +19,11 @@ namespace Personregister.WebAPI.Controllers
         }
 
         [HttpGet(Name = "GetPerson")]
-        public IEnumerable<Person> Get()
+        public IEnumerable<DTOPerson> Get()
         {
-            return _personRepository.getAll();
+            var personliste = _personRepository.getAll();
+            return personliste.Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn });
+            //return _personRepository.getAll();
         }
 
         [HttpPost(Name = "PostPerson")]

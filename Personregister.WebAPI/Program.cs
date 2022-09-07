@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.InMemory;
 using Personregister.Infrastructure.Persistence.Context;
 using Personregister.Infrastructure.Persistence.Repository;
 using Personregister.Application.Contracts.Repository;
+using Personregister.Application.Contracts;
+using Personregister.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IFødselRepository, FødselRepository>();
 builder.Services.AddScoped<IDødsfallRepository, DødsfallRepository>();
+builder.Services.AddScoped<IFødselService, FødselService>();
+builder.Services.AddScoped<INavnService, NavnService>();
 
 
 //builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));

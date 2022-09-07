@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
 using System;
@@ -17,11 +18,13 @@ namespace Personregister.WebAPI.Controllers
 
         private readonly ILogger<FødselController> _logger;
         private readonly IFødselRepository _fødselRepository;
+        private readonly IFødselService fødselService;
 
-        public FødselController(ILogger<FødselController> logger, IFødselRepository fødselRepository)
+        public FødselController(ILogger<FødselController> logger, IFødselRepository fødselRepository, IFødselService fødselService)
         {
             _logger = logger;
             _fødselRepository = fødselRepository;
+            this.fødselService = fødselService;
         }
 
         [HttpGet(Name = "GetFødsel")]
@@ -33,7 +36,7 @@ namespace Personregister.WebAPI.Controllers
         [HttpPost(Name = "PostFødsel")]
         public Fødsel Post(Fødsel fødsel)
         {
-           fødsel = _fødselRepository.add(fødsel);
+           fødsel = fødselService.add(fødsel);
 
             return fødsel;
         }

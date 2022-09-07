@@ -1,4 +1,6 @@
-﻿using Personregister.Application.Contracts.Repository;
+﻿using Personregister.Application;
+using Personregister.Application.Contracts;
+using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
 using Personregister.Infrastructure.Persistence.Context;
 
@@ -8,7 +10,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
     {
         private readonly Personregistercontext personregistercontext;
 
-        public PersonRepository(Personregistercontext personregistercontext)
+        public PersonRepository(Personregistercontext personregistercontext, INavnService navnService)
         {
 
             this.personregistercontext = personregistercontext;
@@ -16,8 +18,10 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
             if (personregistercontext.Personer.Count() == 0)
             {
-                this.personregistercontext.Personer.Add(new Person() { Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 });
-                this.personregistercontext.Personer.Add(new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 });
+                (string fornavn, string etternavn) = navnService.getNavn(12312312312);
+                this.personregistercontext.Personer.Add(new Person() { Fornavn = fornavn, Etternavn = etternavn, Personnummer = 12312312312 });
+                (fornavn, etternavn) = navnService.getNavn(23423423423);
+                this.personregistercontext.Personer.Add(new Person() { Fornavn = fornavn, Etternavn = etternavn, Personnummer = 23423423423 });
 
                 this.personregistercontext.SaveChanges();
             }
