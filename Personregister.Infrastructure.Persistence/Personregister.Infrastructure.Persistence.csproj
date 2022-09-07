@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Personregister.Application\Personregister.Application.csproj" />
     <ProjectReference Include="..\Personregister.Domene\Personregister.Domene.csproj" />
   </ItemGroup>
 

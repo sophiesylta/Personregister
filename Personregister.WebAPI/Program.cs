@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory;
 using Personregister.Infrastructure.Persistence.Context;
 using Personregister.Infrastructure.Persistence.Repository;
-using Personregister.Domene.Repository;
+using Personregister.Application.Contracts.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

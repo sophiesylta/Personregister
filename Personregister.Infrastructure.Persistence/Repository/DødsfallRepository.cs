@@ -1,5 +1,5 @@
-﻿using Personregister.Domene;
-using Personregister.Domene.Repository;
+﻿using Personregister.Application.Contracts.Repository;
+using Personregister.Domene;
 using Personregister.Infrastructure.Persistence.Context;
 
 namespace Personregister.Infrastructure.Persistence.Repository

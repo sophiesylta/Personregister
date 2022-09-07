@@ -1,4 +1,6 @@
-﻿namespace Personregister.Domene.Repository
+﻿using Personregister.Domene;
+
+namespace Personregister.Application.Contracts.Repository
 {
     public interface IPersonRepository
     {

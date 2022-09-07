@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
-using Personregister.Domene.Repository;
 
 namespace Personregister.WebAPI.Controllers
 {
