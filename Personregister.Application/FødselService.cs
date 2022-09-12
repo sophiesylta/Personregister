@@ -47,21 +47,17 @@ namespace Personregister.Application
 
             fødsel.barn.Etternavn = $"{fødsel.mor.Etternavn}-{fødsel.far.Etternavn}";
 
-            //Sjekk om barn eksisterer, i så fall bruk denne, ellers opprett ny
+            //Sjekk om barn eksisterer, i så fall returner fødsel
 
             var barn = personRepository.getPerson(fødsel.barn.Personnummer);
-
+         
             if (barn != null)
             {
-              fødsel.barn = barn;
-            }
-            else
-            {
-              personRepository.add(fødsel.barn);
+                return fødsel;
+              
             }
 
-            // Hvorfor fungerer ikke denne alene? Kan legge til samme barn flere ganger
-            //personRepository.add(fødsel.barn);
+            personRepository.add(fødsel.barn);
 
             fødselRepository.add(fødsel);
             return fødsel;

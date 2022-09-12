@@ -25,7 +25,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
             if (p != null) 
             {
-                return person;    
+                return p;    
             }
 
             person.Kallenavn = kallenavnService.getKallenavn(person.Fornavn, person.Etternavn);
