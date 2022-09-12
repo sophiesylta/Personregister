@@ -6,6 +6,6 @@ namespace Personregister.Application.Contracts.Repository
     {
         List<Fødsel> getAll();
         Fødsel add(Fødsel fødsel);
-        Person getPerson(long personnummer);
+        
     }
 }

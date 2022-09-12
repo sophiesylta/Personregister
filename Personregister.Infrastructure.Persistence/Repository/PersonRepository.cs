@@ -14,25 +14,8 @@ namespace Personregister.Infrastructure.Persistence.Repository
         {
 
             this.personregistercontext = personregistercontext;
-            //this.personregistercontext.Database.EnsureCreated();
-
-            if (personregistercontext.Personer.Count() == 0)
-            {
-                (string fornavn, string etternavn) = navnService.getNavn(12312312312);
-                this.personregistercontext.Personer.Add(new Person() { Fornavn = fornavn, Etternavn = etternavn, Personnummer = 12312312312 });
-                (fornavn, etternavn) = navnService.getNavn(23423423423);
-                this.personregistercontext.Personer.Add(new Person() { Fornavn = fornavn, Etternavn = etternavn, Personnummer = 23423423423 });
-
-                this.personregistercontext.SaveChanges();
-            }
+            
         }
-
-        //private List<Person> personListe = new List<Person>()
-        //{
-        //    new Person(){Fornavn = "Sophie", Etternavn = "Sylta", Personnummer = 12312312312 },
-        //    new Person() { Fornavn = "Trond", Etternavn = "Århus", Personnummer = 23423423423 }
-        //};
-
 
         public Person add(Person person)
         {
@@ -46,7 +29,6 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
             personregistercontext.Personer.Add(person);
             personregistercontext.SaveChanges();
-            //   personListe.Add(person);
 
             return person;
         }
@@ -57,6 +39,11 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
             return personregistercontext.Personer.ToList();
 
+        }
+
+        public Person getPerson(long personnummer)
+        {
+            return personregistercontext.Personer.Where(e => e.Personnummer == personnummer).FirstOrDefault();
         }
     }
 }

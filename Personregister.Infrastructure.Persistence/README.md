@@ -3,11 +3,11 @@ Disse kommandoen utføerer migrering og oppdatering av databasen:
 
 
 eksempler:
-Add-migration kallenavn -project Personregister.WebAPI -startupproject Personregister.WebAPI -Context Personregistercontext
-Update-Database  -project Personregister.WebAPI -startupproject Personregister.WebAPI  -Context Personregistercontext
+Add-migration kallenavn -project Personregister.Infrastructure.Persistence -startupproject Personregister.WebAPI -Context Personregistercontext
+Update-Database  -project Personregister.Infrastructure.PersistenceI -startupproject Personregister.WebAPI  -Context Personregistercontext
 
 
-Remove-Migration -project Personregister.WebAPI -startupproject Personregister.WebAPI -Context Personregistercontext
+Remove-Migration -project Personregister.Infrastructure.Persistence -startupproject Personregister.WebAPI -Context Personregistercontext
 
 //for å fjerne migrasjon fra db , bruk tidliger migrasjon
  Update-Database <LegemiddelverketHenteDato> -Context Personregistercontext

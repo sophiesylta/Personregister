@@ -6,5 +6,6 @@ namespace Personregister.Application.Contracts.Repository
     {
         List<Dødsfall> GetAll();
         Dødsfall add(Dødsfall dødsfall);
+        Dødsfall getDødsfall(long personnummer);
     }
 }

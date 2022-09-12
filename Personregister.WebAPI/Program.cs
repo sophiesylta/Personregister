@@ -19,6 +19,8 @@ builder.Services.AddScoped<IFødselRepository, FødselRepository>();
 builder.Services.AddScoped<IDødsfallRepository, DødsfallRepository>();
 builder.Services.AddScoped<IFødselService, FødselService>();
 builder.Services.AddScoped<INavnService, NavnService>();
+builder.Services.AddScoped<IDødsfallService, DødsfallService>();    
+builder.Services.AddScoped<IInitDataService, InitDataService>();
 
 
 //builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));
@@ -40,7 +42,16 @@ if (app.Environment.IsDevelopment())
 using (var serviceScope = app.Services.CreateScope())
 {
     var uttrekkDbContext = serviceScope.ServiceProvider.GetRequiredService<Personregistercontext>();
-    uttrekkDbContext?.Database.Migrate();
+    //uttrekkDbContext?.Database.Migrate();
+    
+
+    //Tømme database
+    uttrekkDbContext?.Database.EnsureDeleted();
+
+    //Oppretter database på nytt
+    uttrekkDbContext?.Database.EnsureCreated();
+
+    var initDataService = serviceScope.ServiceProvider.GetRequiredService<IInitDataService>();
 }
 
 app.UseHttpsRedirection();

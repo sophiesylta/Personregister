@@ -9,17 +9,19 @@ namespace Personregister.Application
     {
         private readonly IFødselRepository fødselRepository;
         private readonly INavnService navnService;
+        private readonly IPersonRepository personRepository;
 
-        public FødselService(IFødselRepository fødselRepository, INavnService navnService)
+        public FødselService(IFødselRepository fødselRepository, INavnService navnService, IPersonRepository personRepository)
         {
             this.fødselRepository = fødselRepository;
             this.navnService = navnService;
+            this.personRepository = personRepository;
         }
 
         public Fødsel add(Fødsel fødsel)
         {
             //sjekk om mor eksisterer, i så fall bruk denne, ellers opprett ny
-            var mor = fødselRepository.getPerson(fødsel.mor.Personnummer);
+            var mor = personRepository.getPerson(fødsel.mor.Personnummer);
 
             if (mor != null)
             {
@@ -32,7 +34,7 @@ namespace Personregister.Application
             }
 
             //Sjekk om far eksisterer, i så fall bruk denne, ellers opprett ny
-            var far = fødselRepository.getPerson(fødsel.far.Personnummer);
+            var far = personRepository.getPerson(fødsel.far.Personnummer);
 
             if (far != null)
             {
@@ -42,6 +44,8 @@ namespace Personregister.Application
             {
                 (fødsel.far.Fornavn, fødsel.far.Etternavn) = navnService.getNavn(fødsel.far.Personnummer);
             }
+
+            fødsel.barn.Etternavn = $"{fødsel.mor.Etternavn}-{fødsel.far.Etternavn}";
 
             fødselRepository.add(fødsel);
             return fødsel;
