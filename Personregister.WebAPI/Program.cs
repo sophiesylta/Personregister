@@ -21,6 +21,7 @@ builder.Services.AddScoped<IFødselService, FødselService>();
 builder.Services.AddScoped<INavnService, NavnService>();
 builder.Services.AddScoped<IDødsfallService, DødsfallService>();    
 builder.Services.AddScoped<IInitDataService, InitDataService>();
+builder.Services.AddScoped<IKallenavnService, KallenavnService>();
 
 
 //builder.Services.AddDbContext<Personregistercontext>(options=>options.UseInMemoryDatabase("Test"));

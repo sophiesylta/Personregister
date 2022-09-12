@@ -9,12 +9,13 @@ namespace Personregister.Infrastructure.Persistence.Repository
     public class PersonRepository : IPersonRepository
     {
         private readonly Personregistercontext personregistercontext;
+        private readonly IKallenavnService kallenavnService;
 
-        public PersonRepository(Personregistercontext personregistercontext, INavnService navnService)
+        public PersonRepository(Personregistercontext personregistercontext, INavnService navnService, IKallenavnService kallenavnService)
         {
 
             this.personregistercontext = personregistercontext;
-            
+            this.kallenavnService = kallenavnService;
         }
 
         public Person add(Person person)
@@ -26,6 +27,8 @@ namespace Personregister.Infrastructure.Persistence.Repository
             {
                 return person;    
             }
+
+            person.Kallenavn = kallenavnService.getKallenavn(person.Fornavn, person.Etternavn);
 
             personregistercontext.Personer.Add(person);
             personregistercontext.SaveChanges();
