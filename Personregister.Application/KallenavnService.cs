@@ -13,7 +13,7 @@ namespace Personregister.Application
 
         public string getKallenavn(string fornavn, string etternavn)
         {
-            var kallenavn = fornavn.Substring(0, 2) + etternavn.Substring(0,2);
+            var kallenavn = fornavn.Substring(0, Math.Min(fornavn.Length,2)) + etternavn.Substring(0, Math.Min(etternavn.Length, 2));
             kallenavn = kallenavn.ToLower();
             return kallenavn;
         }
