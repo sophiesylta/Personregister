@@ -30,7 +30,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
         public List<Fødsel> getAll()
         {
-            return personregistercontext.Fødsler.ToList();
+            return personregistercontext.Fødsler.Include(f => f.mor).Include(f => f.far).Include(f => f.barn).ToList();
         }
 
        
