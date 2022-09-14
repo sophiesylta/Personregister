@@ -16,7 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personregister.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personregister.Application", "Personregister.Application\Personregister.Application.csproj", "{9220A930-9834-46AC-8995-5BF651509E12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personregister.Application.Test", "Personregister.Application.Test\Personregister.Application.Test.csproj", "{07BF2F69-6D86-41FA-B607-AC85673D7654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personregister.Application.Test", "Personregister.Application.Test\Personregister.Application.Test.csproj", "{07BF2F69-6D86-41FA-B607-AC85673D7654}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personregister.Infrastructure.Persistence.Test", "Personregister.Infrastructure.Persistence.Test\Personregister.Infrastructure.Persistence.Test.csproj", "{2C5AC575-7392-4DAD-9707-08C23E95A176}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{07BF2F69-6D86-41FA-B607-AC85673D7654}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07BF2F69-6D86-41FA-B607-AC85673D7654}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07BF2F69-6D86-41FA-B607-AC85673D7654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C5AC575-7392-4DAD-9707-08C23E95A176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5AC575-7392-4DAD-9707-08C23E95A176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5AC575-7392-4DAD-9707-08C23E95A176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5AC575-7392-4DAD-9707-08C23E95A176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
