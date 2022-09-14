@@ -31,6 +31,7 @@ namespace Personregister.Application
             else 
             {
                 (fødsel.mor.Fornavn, fødsel.mor.Etternavn) = navnService.getNavn(fødsel.mor.Personnummer);
+                personRepository.add(fødsel.mor);
             }
 
             //Sjekk om far eksisterer, i så fall bruk denne, ellers opprett ny
@@ -43,6 +44,7 @@ namespace Personregister.Application
             else 
             {
                 (fødsel.far.Fornavn, fødsel.far.Etternavn) = navnService.getNavn(fødsel.far.Personnummer);
+                personRepository.add(fødsel.far);
             }
 
             fødsel.barn.Etternavn = $"{fødsel.mor.Etternavn}-{fødsel.far.Etternavn}";
