@@ -55,8 +55,7 @@ namespace Personregister.Application
          
             if (barn != null)
             {
-                return fødsel;
-              
+                throw new Exception($"Barn finnes med personnummer {fødsel.barn.Personnummer} fra før ");
             }
 
             personRepository.add(fødsel.barn);
