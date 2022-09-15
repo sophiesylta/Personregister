@@ -33,9 +33,9 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
 
             Assert.Equal(1, personregistercontext.Dødsfall.Count());
 
-            var fodsfallIDB=personregistercontext.Dødsfall.First();
+            var dødsfallIDB=personregistercontext.Dødsfall.First();
 
-            Assert.NotNull(fodsfallIDB.person);
+            Assert.NotNull(dødsfallIDB.person);
 
         }
 
