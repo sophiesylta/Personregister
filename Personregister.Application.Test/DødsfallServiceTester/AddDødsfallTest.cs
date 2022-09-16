@@ -65,8 +65,12 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         public void TestDødsfallEksistererFraFør()
         {
             var dødsfall = nyttDødsfall();
-            
-            dødsfallRepository.Setup(e => e.getDødsfall(dødsfall.person.Personnummer));
+
+            personRepository.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
+
+            dødsfallRepository.Setup(e => e.getDødsfall(dødsfall.person.Personnummer)).Returns(dødsfall);
+
+            dødsfall = dødsfallService.add(dødsfall);
 
             dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Never);
         }
