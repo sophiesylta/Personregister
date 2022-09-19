@@ -45,16 +45,16 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             Assert.True(kallenavnet.Length >= minLengde);
         }
 
-        [Fact]
-        [Trait("KallenavnService", "KallenavnService")]
-        public void TestGirUnikeKallenavn()
-        {
-            KallenavnService kallenavnService = new KallenavnService();
-            var kallenavnet1= kallenavnService.getKallenavn("Donald", "Duck");
-            var kallenavnet2 = kallenavnService.getKallenavn("Dolly", "Duck");
+//        [Fact]
+//        [Trait("KallenavnService", "KallenavnService")]
+//        public void TestGirUnikeKallenavn()
+//        {
+//            KallenavnService kallenavnService = new KallenavnService();
+//            var kallenavnet1= kallenavnService.getKallenavn("Donald", "Duck");
+//            var kallenavnet2 = kallenavnService.getKallenavn("Dolly", "Duck");
 
-            Assert.False(kallenavnet1.Equals(kallenavnet2));
-        }
+//            Assert.False(kallenavnet1.Equals(kallenavnet2));
+//        }
 
 
 

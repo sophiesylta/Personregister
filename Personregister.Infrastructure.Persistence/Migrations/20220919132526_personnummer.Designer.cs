@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Personregister.Infrastructure.Persistence.Context;
 
@@ -11,9 +12,10 @@ using Personregister.Infrastructure.Persistence.Context;
 namespace Personregister.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(Personregistercontext))]
-    partial class PersonregistercontextModelSnapshot : ModelSnapshot
+    [Migration("20220919132526_personnummer")]
+    partial class personnummer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

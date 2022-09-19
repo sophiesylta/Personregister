@@ -14,5 +14,11 @@ namespace Personregister.Infrastructure.Persistence.Context
 
         public DbSet<Dødsfall> Dødsfall { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Person>().HasIndex(u => u.Personnummer).IsUnique();
+        }
+
     }
 }

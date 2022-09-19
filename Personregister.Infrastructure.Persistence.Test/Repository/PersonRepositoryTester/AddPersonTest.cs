@@ -62,11 +62,13 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
         [Trait("PersonRepository", "PersonRepository")]
         public void LeggTilPersonSomFinnesFraFør() 
         {
-            Person person = nyPerson();
-            personRepository.add(person);
-            personRepository.add(person);
+            Person person1 = nyPerson();
+            personRepository.add(person1);
+            Person person2 = nyPerson();
+            personRepository.add(person2);
+            personregistercontext.SaveChanges();
 
-            Assert.Equal(1, personregistercontext.Personer.Count());
+            Assert.Equal(2, personregistercontext.Personer.Count());
         }
 
         public Person nyPerson()
