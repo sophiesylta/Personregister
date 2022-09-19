@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Personregister.Application.Contracts.Repository;
+using Personregister.Application.Contracts;
 using Personregister.Domene;
 using Personregister.WebAPI.Models;
 
@@ -10,18 +10,18 @@ namespace Personregister.WebAPI.Controllers
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
-        private readonly IPersonRepository _personRepository;
+        private readonly IPersonService _personService;
 
-        public PersonController(ILogger<PersonController> logger, IPersonRepository personRepository)
+        public PersonController(ILogger<PersonController> logger, IPersonService personService)
         {
             _logger = logger;
-            _personRepository = personRepository;
+            _personService = personService;
         }
 
         [HttpGet(Name = "GetPerson")]
         public IEnumerable<DTOPerson> Get()
         {
-            var personliste = _personRepository.getAll();
+            var personliste = _personService.getAll();
             return personliste.Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn });
             //return _personRepository.getAll();
         }
@@ -30,7 +30,7 @@ namespace Personregister.WebAPI.Controllers
         public Person Post(Person person)
         {
             _logger.LogDebug($"Legger til ny person {person.Fornavn}");
-            person = _personRepository.add(person);
+            person = _personService.add(person);
 
             return person;
         }
