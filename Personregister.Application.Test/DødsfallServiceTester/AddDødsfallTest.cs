@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Personregister.Domene;
 using Microsoft.Extensions.Logging;
+using Personregister.DTO;
 
 namespace Personregister.Application.Test.DødsfallServiceTester
 {
@@ -37,10 +38,11 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         public void TestDødsfallService()
         {
             var dødsfall = nyttDødsfall();
+            var dødsfallDTO = nyDødsfallDTO();
             
             personRepository.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
 
-            dødsfall = dødsfallService.add(dødsfall);
+            dødsfall = dødsfallService.add(dødsfallDTO);
 
             dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Once);
 
@@ -51,12 +53,12 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         [Trait("DødsfallService", "DødsfallService")]
         public void TestDødsfallPersonFinnesIkke() 
         {
-            var dødsfall = nyttDødsfall();
+            var dødsfallDTO = nyDødsfallDTO();
             
             // Sjekker at riktig feilmelding blir kastet når personen ikke finnes fra før
-            var ex = Assert.Throws<Exception>(()=> dødsfallService.add(dødsfall));
+            var ex = Assert.Throws<Exception>(()=> dødsfallService.add(dødsfallDTO));
 
-            Assert.Equal($"Finner ikke person med personnummer{dødsfall.person.Personnummer}", ex.Message);
+            Assert.Equal($"Finner ikke person med personnummer{dødsfallDTO.personnummer}", ex.Message);
 
         }
 
@@ -65,12 +67,13 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         public void TestDødsfallEksistererFraFør()
         {
             var dødsfall = nyttDødsfall();
+            var dødsfallDTO = nyDødsfallDTO();
 
             personRepository.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
 
             dødsfallRepository.Setup(e => e.getDødsfall(dødsfall.person.Personnummer)).Returns(dødsfall);
 
-            dødsfall = dødsfallService.add(dødsfall);
+            dødsfall = dødsfallService.add(dødsfallDTO);
 
             dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Never);
         }
@@ -90,6 +93,18 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             };
 
             return dødsfall;
+        }
+
+        public DTODødsfall nyDødsfallDTO() 
+        {
+           DTODødsfall dødsfallDTO = new DTODødsfall()
+            {
+                personnummer = nyttDødsfall().person.Personnummer,
+                dødsårsak = nyttDødsfall().dødsårsak,
+                dødsTid = nyttDødsfall().dødsTid
+            };
+
+            return dødsfallDTO;
         }
     }
 }

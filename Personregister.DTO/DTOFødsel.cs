@@ -1,6 +1,6 @@
 ﻿using Personregister.Domene;
 
-namespace Personregister.WebAPI.Models
+namespace Personregister.DTO
 {
     public class DTOFødsel
     {

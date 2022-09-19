@@ -1,5 +1,5 @@
 ﻿using Personregister.Domene;
-using Personregister.WebAPI.Models;
+using Personregister.DTO;
 
 namespace Personregister.Application.Contracts
 {

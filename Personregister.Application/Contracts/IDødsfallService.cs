@@ -1,11 +1,11 @@
 ﻿using Personregister.Domene;
-
+using Personregister.DTO;
 
 namespace Personregister.Application.Contracts
 {
     public interface IDødsfallService
     {
-        public Dødsfall add(Dødsfall dødsfall);
+        public Dødsfall add(DTODødsfall dødsfallDTO);
         public List<Dødsfall> GetAll();
     }
 }

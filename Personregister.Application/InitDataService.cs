@@ -1,7 +1,7 @@
 ﻿using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
-using Personregister.WebAPI.Models;
+using Personregister.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,20 +80,22 @@ namespace Personregister.Application
             (string fornavn, string etternavn) = navnService.getNavn(andebyenBarnenummer[2]);
             var person1 = personRepository.add(new Person() { Fornavn = fornavn, Etternavn = etternavn, Personnummer = andebyenBarnenummer[2] });
 
-            dødsfallService.add(new Dødsfall()
+            dødsfallService.add(new DTODødsfall()
             {
-                person = person1,
+                personnummer = person1.Personnummer,
                 dødsTid = new DateTime(2022, 12, 24, 7, 0, 0),
-                dødsårsak = "Sjelden genetisk sykdom" }); ;
+                dødsårsak = "Sjelden genetisk sykdom" 
+            });
 
             (fornavn, etternavn) = navnService.getNavn(andebyenNummerListe[1]);
             var person2 = personRepository.add(new Person() { Fornavn = fornavn, Etternavn = etternavn, Personnummer = andebyenNummerListe[1] });
 
-            dødsfallService.add(new Dødsfall()
+            dødsfallService.add(new DTODødsfall()
             {
-                person = person2,
+                personnummer = person2.Personnummer,
                 dødsTid = new DateTime(2022, 12, 27, 13, 10, 22),
-                dødsårsak = "Sorg" }); ; ;
+                dødsårsak = "Sorg" 
+            });
         }
     }
 }

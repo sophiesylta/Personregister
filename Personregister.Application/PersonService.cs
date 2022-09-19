@@ -1,7 +1,7 @@
 ﻿using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
-using Personregister.WebAPI.Models;
+using Personregister.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

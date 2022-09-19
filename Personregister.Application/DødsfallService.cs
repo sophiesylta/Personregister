@@ -2,6 +2,7 @@
 using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
+using Personregister.DTO;
 
 namespace Personregister.Application
 {
@@ -19,8 +20,16 @@ namespace Personregister.Application
             this.logger = logger;
         }
 
-        public Dødsfall add(Dødsfall dødsfall)
+        public Dødsfall add(DTODødsfall dødsfallDTO)
         {
+            //Oppretter dødsfall fra DTO
+            var dødsfall = new Dødsfall()
+            {
+                person = new Person() { Personnummer = dødsfallDTO.personnummer },
+                dødsårsak = dødsfallDTO.dødsårsak,
+                dødsTid = dødsfallDTO.dødsTid
+            };
+
             //sjekk om person eksisterer, i så fall bruk denne, ellers throw exception
             var person = personRepository.getPerson(dødsfall.person.Personnummer);
 

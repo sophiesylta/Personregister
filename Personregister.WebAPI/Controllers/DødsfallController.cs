@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Personregister.Application.Contracts;
-using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
-using Personregister.WebAPI.Models;
+using Personregister.DTO;
 
 namespace Personregister.WebAPI.Controllers
 {
@@ -12,7 +11,7 @@ namespace Personregister.WebAPI.Controllers
     {
         private readonly IDødsfallService dødsfallService;
 
-        public DødsfallController(ILogger<DødsfallController> logger, IDødsfallService dødsfallService)
+        public DødsfallController(IDødsfallService dødsfallService)
         {
             this.dødsfallService = dødsfallService;
         }
@@ -26,16 +25,7 @@ namespace Personregister.WebAPI.Controllers
         [HttpPost(Name = "PostDødsfall")]
         public Dødsfall Post(DTODødsfall dødsfallDTO)
         {
-            var dødsfall = new Dødsfall()
-            {
-                person = new Person() { Personnummer = dødsfallDTO.personnummer },
-                dødsårsak = dødsfallDTO.dødsårsak,
-                dødsTid = dødsfallDTO.dødsTid
-            };
-
-            dødsfall = dødsfallService.add(dødsfall);
-
-            return dødsfall;
+            return dødsfallService.add(dødsfallDTO);
         }
     }
 }
