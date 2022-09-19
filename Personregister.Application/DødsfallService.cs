@@ -8,14 +8,13 @@ namespace Personregister.Application
     public class DødsfallService : IDødsfallService
     {
         private readonly IDødsfallRepository dødsfallRepository;
-        private readonly INavnService navnService;
         private readonly IPersonRepository personRepository;
         private readonly ILogger<DødsfallService> logger;
 
-        public DødsfallService(IDødsfallRepository dødsfallRepository, INavnService navnService, IPersonRepository personRepository, ILogger<DødsfallService> logger)
+        public DødsfallService(IDødsfallRepository dødsfallRepository, IPersonRepository personRepository, ILogger<DødsfallService> logger)
         {
             this.dødsfallRepository = dødsfallRepository;
-            this.navnService = navnService;
+
             this.personRepository = personRepository;
             this.logger = logger;
         }
@@ -44,6 +43,11 @@ namespace Personregister.Application
             dødsfallRepository.add(dødsfall);
             return dødsfall;
           
+        }
+
+        public List<Dødsfall> GetAll()
+        {
+            return dødsfallRepository.GetAll();
         }
     }   
 }

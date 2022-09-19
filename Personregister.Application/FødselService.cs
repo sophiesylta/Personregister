@@ -64,6 +64,10 @@ namespace Personregister.Application
             return fødsel;
         }
 
+        public List<Fødsel> getAll()
+        {
+            return fødselRepository.getAll();
+        }
     }
 }
 

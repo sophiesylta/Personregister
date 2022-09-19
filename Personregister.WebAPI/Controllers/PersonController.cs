@@ -23,7 +23,6 @@ namespace Personregister.WebAPI.Controllers
         {
             var personliste = _personService.getAll();
             return personliste.Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn });
-            //return _personRepository.getAll();
         }
 
         [HttpPost(Name = "PostPerson")]
