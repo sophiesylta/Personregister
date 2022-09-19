@@ -1,6 +1,7 @@
 ﻿using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
+using Personregister.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,11 @@ namespace Personregister.Application
             var barnenummer = 1;
             foreach (var personnummer in barnePersonnummerListe) 
             {
-                fødselService.add(new Fødsel()
+                fødselService.add(new DTOFødsel()
                 {
-                    mor = new Person() { Personnummer = personnummerListe[0] },
-                    far = new Person() { Personnummer = personnummerListe[1] },
+                    
+                    personnummerMor  = personnummerListe[0],
+                    personnummerFar = personnummerListe[1] ,
                     barn = new Person() { Fornavn = $"barn{barnenummer}", Etternavn = $"barn{barnenummer}", Personnummer = personnummer, },
                     fødselTid = DateTime.Now.AddYears(-10+barnenummer*2)
                 });
@@ -61,10 +63,10 @@ namespace Personregister.Application
 
             foreach (var personnummer in andebyenBarnenummer)
             {
-                fødselService.add(new Fødsel
+                fødselService.add(new DTOFødsel
                 {
-                    mor = new Person() { Personnummer = andebyenNummerListe[0] },
-                    far = new Person() { Personnummer = andebyenNummerListe[1] },
+                    personnummerMor = andebyenNummerListe[0],
+                    personnummerFar = andebyenNummerListe[1],
                     barn = new Person() { Fornavn = andebyenNavneLise[i], Etternavn = $"barn{i+1}", Personnummer = personnummer, },
                     fødselTid = DateTime.Now.AddYears(-10 + i * 2)
                 });

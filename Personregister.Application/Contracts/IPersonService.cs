@@ -1,4 +1,5 @@
 ﻿using Personregister.Domene;
+using Personregister.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Personregister.Application.Contracts
     public interface IPersonService
     {
         public Person add(Person person);
-        public List<Person> getAll();
+        public List<DTOPerson> getAll();
 
     }
 }

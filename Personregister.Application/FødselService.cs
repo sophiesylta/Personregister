@@ -1,6 +1,7 @@
 ﻿using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
+using Personregister.WebAPI.Models;
 using System.Reflection.Metadata;
 
 namespace Personregister.Application
@@ -18,8 +19,18 @@ namespace Personregister.Application
             this.personRepository = personRepository;
         }
 
-        public Fødsel add(Fødsel fødsel)
+        public Fødsel add(DTOFødsel fødselDTO)
         {
+            // Oppretter fødsel fra DTO
+            var fødsel = new Fødsel()
+            {
+                mor = new Person() { Personnummer = fødselDTO.personnummerMor },
+                far = new Person() { Personnummer = fødselDTO.personnummerFar },
+                barn = fødselDTO.barn,
+                fødselTid = fødselDTO.fødselTid
+
+            };
+
             //sjekk om mor eksisterer, i så fall bruk denne, ellers opprett ny
             var mor = personRepository.getPerson(fødsel.mor.Personnummer);
 

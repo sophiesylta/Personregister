@@ -30,18 +30,7 @@ namespace Personregister.WebAPI.Controllers
         [HttpPost(Name = "PostFødsel")]
         public Fødsel Post(DTOFødsel fødselDTO)
         {
-            var fødsel = new Fødsel()
-            {
-                mor = new Person() { Personnummer = fødselDTO.personnummerMor },
-                far = new Person() { Personnummer = fødselDTO.personnummerFar },
-                barn = fødselDTO.barn,
-                fødselTid = fødselDTO.fødselTid
-                
-            };
-            
-             fødsel = fødselService.add(fødsel);
-
-            return fødsel;
+             return fødselService.add(fødselDTO);
         }
     }
 }

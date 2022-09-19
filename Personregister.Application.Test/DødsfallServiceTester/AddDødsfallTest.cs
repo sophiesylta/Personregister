@@ -29,7 +29,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
              
 
 
-            dødsfallService = new DødsfallService(dødsfallRepository.Object, navnService, personRepository.Object, logger.Object);
+            dødsfallService = new DødsfallService(dødsfallRepository.Object, personRepository.Object, logger.Object);
         }
 
         [Fact]

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Personregister.Application\Personregister.Application.csproj" />
     <ProjectReference Include="..\Personregister.Domene\Personregister.Domene.csproj" />
+    <ProjectReference Include="..\Personregister.DTO\Personregister.DTO.csproj" />
     <ProjectReference Include="..\Personregister.Infrastructure.Persistence\Personregister.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 

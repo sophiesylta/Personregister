@@ -1,6 +1,7 @@
 ﻿using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
+using Personregister.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,9 @@ namespace Personregister.Application
             return person;
         }
 
-        public List<Person> getAll() 
+        public List<DTOPerson> getAll() 
         {
-            return personRepository.getAll();
+            return personRepository.getAll().Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn }).ToList();
 
         }
     }

@@ -21,8 +21,7 @@ namespace Personregister.WebAPI.Controllers
         [HttpGet(Name = "GetPerson")]
         public IEnumerable<DTOPerson> Get()
         {
-            var personliste = _personService.getAll();
-            return personliste.Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn });
+            return _personService.getAll();
         }
 
         [HttpPost(Name = "PostPerson")]

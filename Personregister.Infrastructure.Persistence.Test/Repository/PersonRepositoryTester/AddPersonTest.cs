@@ -23,7 +23,7 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
             //3 bruke InMemory -data  (noe begrenset funksjonalitet...
         
             personregistercontext = new Personregistercontext(new DbContextOptionsBuilder<Personregistercontext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options);
-            personRepository = new PersonRepository(personregistercontext, navnService, kallenavnService);
+            personRepository = new PersonRepository(personregistercontext);
         }
 
         [Fact]
