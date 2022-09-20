@@ -68,6 +68,7 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
             personRepository.add(person2);
             personregistercontext.SaveChanges();
 
+            //Fungerer ikke pga inMemory database?
             Assert.Equal(2, personregistercontext.Personer.Count());
         }
 

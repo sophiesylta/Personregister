@@ -28,9 +28,10 @@ namespace Personregister.WebAPI.Controllers
         }
 
         [HttpPost(Name = "PostFødsel")]
-        public Fødsel Post(DTOFødsel fødselDTO)
+        public Boolean Post(DTOFødsel fødselDTO)
         {
-             return fødselService.add(fødselDTO);
+           return fødselService.add(fødselDTO);
+
         }
     }
 }

@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Personregister.Infrastructure.Persistence\Personregister.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repository\FødselRepositoryTester\" />
+  </ItemGroup>
+
 </Project>

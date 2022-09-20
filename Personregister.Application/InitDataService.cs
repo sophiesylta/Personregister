@@ -39,7 +39,7 @@ namespace Personregister.Application
                     
                     personnummerMor  = personnummerListe[0],
                     personnummerFar = personnummerListe[1] ,
-                    barn = new Person() { Fornavn = $"barn{barnenummer}", Etternavn = $"barn{barnenummer}", Personnummer = personnummer, },
+                    barn = new DTOBarn() { Fornavn = $"barn{barnenummer}", Etternavn = $"barn{barnenummer}", Personnummer = personnummer, },
                     fødselTid = DateTime.Now.AddYears(-10+barnenummer*2)
                 });
                 barnenummer++;
@@ -69,7 +69,7 @@ namespace Personregister.Application
                 {
                     personnummerMor = andebyenNummerListe[0],
                     personnummerFar = andebyenNummerListe[1],
-                    barn = new Person() { Fornavn = andebyenNavneLise[i], Etternavn = $"barn{i+1}", Personnummer = personnummer, },
+                    barn = new DTOBarn() { Fornavn = andebyenNavneLise[i], Etternavn = $"barn{i+1}", Personnummer = personnummer, },
                     fødselTid = DateTime.Now.AddYears(-10 + i * 2)
                 });
                 i++;

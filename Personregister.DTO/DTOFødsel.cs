@@ -1,4 +1,4 @@
-﻿using Personregister.Domene;
+﻿
 
 namespace Personregister.DTO
 {
@@ -6,7 +6,7 @@ namespace Personregister.DTO
     {
         public long personnummerMor { get; set; }
         public long personnummerFar { get; set; }
-        public Person barn { get; set; }
+        public DTOBarn barn { get; set; }
         public DateTime fødselTid { get; set; }
 
     }

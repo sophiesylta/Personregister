@@ -19,14 +19,14 @@ namespace Personregister.Application
             this.personRepository = personRepository;
         }
 
-        public Fødsel add(DTOFødsel fødselDTO)
+        public Boolean add(DTOFødsel fødselDTO)
         {
             // Oppretter fødsel fra DTO
             var fødsel = new Fødsel()
             {
                 mor = new Person() { Personnummer = fødselDTO.personnummerMor },
                 far = new Person() { Personnummer = fødselDTO.personnummerFar },
-                barn = fødselDTO.barn,
+                barn = new Person() {Personnummer = fødselDTO.barn.Personnummer, Fornavn = fødselDTO.barn.Fornavn, Etternavn = fødselDTO.barn.Etternavn },
                 fødselTid = fødselDTO.fødselTid
 
             };
@@ -72,7 +72,7 @@ namespace Personregister.Application
             personRepository.add(fødsel.barn);
 
             fødselRepository.add(fødsel);
-            return fødsel;
+            return true;
         }
 
         public List<Fødsel> getAll()
