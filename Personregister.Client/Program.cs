@@ -8,6 +8,7 @@ HttpClient client = new HttpClient();
 client.BaseAddress = new Uri("https://localhost:7213/");
 await Task.Delay(2000);
 await createFødsel(client);
+await createFødslerFraFil(client, ".\\Datafiler\\Fødsler.csv");
 await getPersoner(client);
 
 async Task<Boolean> getPersoner(HttpClient client) 
@@ -41,6 +42,36 @@ async Task<Boolean> createFødsel(HttpClient client)
         };
 
         var result = await client.PostAsJsonAsync<DTOFødsel>("Fødsel", fødselDTO);
+
+    }
+    catch (Exception exception)
+    {
+
+        Console.WriteLine(exception.Message);
+    }
+
+    return true;
+}
+
+async Task<Boolean> createFødslerFraFil(HttpClient client, string filnavn)
+{
+    try
+    {
+        var lines = File.ReadAllLines(filnavn);
+        foreach (var line in lines)
+        {
+            String[] data = line.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            DTOFødsel fødselDTO = new DTOFødsel()
+            {
+                personnummerMor = Convert.ToInt64(data[0]),
+                personnummerFar = Convert.ToInt64(data[1]),
+                barn = new DTOBarn() { Personnummer = Convert.ToInt64(data[2]), Fornavn = data[3], Etternavn = data[4] }
+            };
+            var result = await client.PostAsJsonAsync<DTOFødsel>("Fødsel", fødselDTO);
+
+            Console.WriteLine(line);
+        }
 
     }
     catch (Exception exception)
