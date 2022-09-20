@@ -25,12 +25,12 @@ namespace Personregister.WebAPI.Controllers
         }
 
         [HttpPost(Name = "PostPerson")]
-        public Person Post(Person person)
+        public DTOAddPerson Post(DTOAddPerson personDTO)
         {
-            _logger.LogDebug($"Legger til ny person {person.Fornavn}");
-            person = _personService.add(person);
+            _logger.LogDebug($"Legger til ny person {personDTO.fornavn}");
+            personDTO = _personService.add(personDTO);
 
-            return person;
+            return personDTO;
         }
     }
 }

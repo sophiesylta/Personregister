@@ -9,10 +9,14 @@ client.BaseAddress = new Uri("https://localhost:7213/");
 await Task.Delay(2000);
 await createFødsel(client);
 await createFødslerFraFil(client, ".\\Datafiler\\Fødsler.csv");
+await createPersonerFraFil(client, ".\\Datafiler\\Personer.csv");
+await createDødsfallFraFil(client, ".\\Datafiler\\Dødsfall.csv");
 await getPersoner(client);
+await getDødsfall(client);
 
 async Task<Boolean> getPersoner(HttpClient client) 
 {
+    Console.WriteLine("\nPersoner:\n");
     try
     {
 
@@ -28,6 +32,25 @@ async Task<Boolean> getPersoner(HttpClient client)
         Console.WriteLine(exception.Message);
     }
     return true;    
+}
+
+async Task<Boolean> getDødsfall(HttpClient client)
+{
+    Console.WriteLine("\nDØDSFALL:\n");
+    try
+    {
+        List<DTOGetDødsfall> dødsfall = await client.GetFromJsonAsync<List<DTOGetDødsfall>>("Dødsfall");
+        foreach (var d in dødsfall)
+        {
+            Console.WriteLine("Navn: "+d.fornavn +" " +"Dødsårsak: "+ d.dødsårsak);
+        }
+    }
+    catch (Exception exception)
+    {
+        Console.WriteLine(exception.Message);
+
+    }
+    return true;
 }
 
 async Task<Boolean> createFødsel(HttpClient client)
@@ -70,7 +93,67 @@ async Task<Boolean> createFødslerFraFil(HttpClient client, string filnavn)
             };
             var result = await client.PostAsJsonAsync<DTOFødsel>("Fødsel", fødselDTO);
 
-            Console.WriteLine(line);
+            //Console.WriteLine(line);
+        }
+
+    }
+    catch (Exception exception)
+    {
+
+        Console.WriteLine(exception.Message);
+    }
+
+    return true;
+}
+
+async Task<Boolean> createPersonerFraFil(HttpClient client, string filnavn)
+{
+    try
+    {
+        var lines = File.ReadAllLines(filnavn);
+        foreach (var line in lines)
+        {
+            String[] data = line.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            DTOAddPerson personDTO = new DTOAddPerson()
+            {
+                personnummer = Convert.ToInt64(data[0]),
+                fornavn = data[1],
+                etternavn = data[2]
+            };
+            var result = await client.PostAsJsonAsync<DTOAddPerson>("Person", personDTO);
+
+            //Console.WriteLine(line);
+        }
+
+    }
+    catch (Exception exception)
+    {
+
+        Console.WriteLine(exception.Message);
+    }
+
+    return true;
+}
+
+async Task<Boolean> createDødsfallFraFil(HttpClient client, string filnavn)
+{
+    try
+    {
+        var lines = File.ReadAllLines(filnavn);
+        foreach (var line in lines)
+        {
+            String[] data = line.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            DTODødsfall dødsfallDTO = new DTODødsfall()
+            {
+                personnummer = Convert.ToInt64(data[0]),
+                dødsårsak = data[1],
+                dødsTid = DateTime.Parse(data[2])
+            };
+            var result = await client.PostAsJsonAsync<DTODødsfall>("Dødsfall", dødsfallDTO);
+
+            //Console.WriteLine(line);
         }
 
     }

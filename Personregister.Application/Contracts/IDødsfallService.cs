@@ -6,6 +6,6 @@ namespace Personregister.Application.Contracts
     public interface IDødsfallService
     {
         public Dødsfall add(DTODødsfall dødsfallDTO);
-        public List<Dødsfall> GetAll();
+        public List<DTOGetDødsfall> GetAll();
     }
 }

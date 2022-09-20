@@ -54,9 +54,16 @@ namespace Personregister.Application
           
         }
 
-        public List<Dødsfall> GetAll()
+        public List<DTOGetDødsfall> GetAll()
         {
-            return dødsfallRepository.GetAll();
+            var dødsfallDTOListe = new List<DTOGetDødsfall>();
+            var dødsfallListe = dødsfallRepository.GetAll();
+            foreach (var d in dødsfallListe)
+            {
+                var dto = new DTOGetDødsfall() { fornavn = d.person.Fornavn, dødsårsak = d.dødsårsak };
+                dødsfallDTOListe.Add(dto);
+            }
+            return dødsfallDTOListe;
         }
     }   
 }

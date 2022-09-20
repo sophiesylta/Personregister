@@ -12,7 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Datafiler\Dødsfall.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Datafiler\Fødsler.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Datafiler\Personer.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

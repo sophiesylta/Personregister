@@ -17,7 +17,7 @@ namespace Personregister.WebAPI.Controllers
         }
 
         [HttpGet(Name = "GetDødsfall")]
-        public IEnumerable<Dødsfall> Get()
+        public IEnumerable<DTOGetDødsfall> Get()
         {
             return dødsfallService.GetAll();
         }

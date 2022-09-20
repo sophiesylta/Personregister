@@ -10,7 +10,7 @@ namespace Personregister.Application.Contracts
 {
     public interface IPersonService
     {
-        public Person add(Person person);
+        public DTOAddPerson add(DTOAddPerson personDTO);
         public List<DTOPerson> getAll();
 
     }

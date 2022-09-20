@@ -20,19 +20,21 @@ namespace Personregister.Application
             this.personRepository = personRepository;
             this.kallenavnService = kallenavnService;
         }
-        public Person add(Person person)
+        public DTOAddPerson add(DTOAddPerson personDTO)
         {
             //Sjekke om person eksisterer, i så fall returneres denne, ellers opprett ny
-            var p = personRepository.getPerson(person.Personnummer);
+            var p = personRepository.getPerson(personDTO.personnummer);
 
             if (p != null)
             {
-                return p;
+                return personDTO;
             }
+
+            Person person = new Person() {Personnummer = personDTO.personnummer, Etternavn = personDTO.etternavn, Fornavn = personDTO.fornavn };
 
             person.Kallenavn = kallenavnService.getKallenavn(person.Fornavn, person.Etternavn);
             personRepository.add(person);
-            return person;
+            return personDTO;
         }
 
         public List<DTOPerson> getAll() 
