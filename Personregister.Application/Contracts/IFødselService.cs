@@ -7,6 +7,6 @@ namespace Personregister.Application.Contracts
     {
         Boolean add(DTOFødsel fødselDTO);
 
-        List<Fødsel> getAll();    
+        List<DTOGetFødsel> getAll();    
     }
 }

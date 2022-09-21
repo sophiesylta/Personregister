@@ -42,5 +42,10 @@ namespace Personregister.Application
             return personRepository.getAll().Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn }).ToList();
 
         }
+
+        public Person getPerson(long personnummer)
+        {
+            return personRepository.getPerson(personnummer);
+        }
     }
 }

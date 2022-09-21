@@ -10,74 +10,107 @@ namespace Personregister.Application
     {
         private readonly IFødselRepository fødselRepository;
         private readonly INavnService navnService;
-        private readonly IPersonRepository personRepository;
+        private readonly IPersonService personService;
 
-        public FødselService(IFødselRepository fødselRepository, INavnService navnService, IPersonRepository personRepository)
+        public FødselService(IFødselRepository fødselRepository, INavnService navnService, IPersonService personService)
         {
             this.fødselRepository = fødselRepository;
             this.navnService = navnService;
-            this.personRepository = personRepository;
+            this.personService = personService;
         }
 
         public Boolean add(DTOFødsel fødselDTO)
         {
-            // Oppretter fødsel fra DTO
-            var fødsel = new Fødsel()
-            {
-                mor = new Person() { Personnummer = fødselDTO.personnummerMor },
-                far = new Person() { Personnummer = fødselDTO.personnummerFar },
-                barn = new Person() {Personnummer = fødselDTO.barn.Personnummer, Fornavn = fødselDTO.barn.Fornavn, Etternavn = fødselDTO.barn.Etternavn },
-                fødselTid = fødselDTO.fødselTid
-
-            };
-
             //sjekk om mor eksisterer, i så fall bruk denne, ellers opprett ny
-            var mor = personRepository.getPerson(fødsel.mor.Personnummer);
+            var mor = personService.getPerson(fødselDTO.personnummerMor);
 
             if (mor != null)
             {
-               
-                fødsel.mor = mor;
+
+                fødselDTO.personnummerMor = mor.Personnummer;
             }
-            else 
+            else
             {
-                (fødsel.mor.Fornavn, fødsel.mor.Etternavn) = navnService.getNavn(fødsel.mor.Personnummer);
-                personRepository.add(fødsel.mor);
+                (mor.Fornavn, mor.Etternavn) = navnService.getNavn(fødselDTO.personnummerMor);
+                personService.add(new DTOAddPerson() { fornavn =  mor.Fornavn, etternavn = mor.Etternavn, personnummer = fødselDTO.personnummerMor});
             }
 
             //Sjekk om far eksisterer, i så fall bruk denne, ellers opprett ny
-            var far = personRepository.getPerson(fødsel.far.Personnummer);
+            var far = personService.getPerson(fødselDTO.personnummerFar);
 
             if (far != null)
             {
-                fødsel.far = far;
+                fødselDTO.personnummerFar = far.Personnummer;
             }
             else 
             {
-                (fødsel.far.Fornavn, fødsel.far.Etternavn) = navnService.getNavn(fødsel.far.Personnummer);
-                personRepository.add(fødsel.far);
+                (far.Fornavn, far.Etternavn) = navnService.getNavn(fødselDTO.personnummerFar);
+                personService.add(new DTOAddPerson() { fornavn = far.Fornavn, etternavn = far.Etternavn, personnummer = fødselDTO.personnummerFar });
             }
 
-            fødsel.barn.Etternavn = $"{fødsel.mor.Etternavn}-{fødsel.far.Etternavn}";
+            fødselDTO.barn.Etternavn = $"{mor.Etternavn}-{far.Etternavn}";
 
-            //Sjekk om barn eksisterer, i så fall returner fødsel
+            //Sjekk om barn eksisterer, i så fall kast exception
 
-            var barn = personRepository.getPerson(fødsel.barn.Personnummer);
+            var barn = personService.getPerson(fødselDTO.barn.Personnummer);
          
             if (barn != null)
             {
-                throw new Exception($"Barn finnes med personnummer {fødsel.barn.Personnummer} fra før ");
+                throw new Exception($"Barn finnes med personnummer {fødselDTO.barn.Personnummer} fra før ");
             }
 
-            personRepository.add(fødsel.barn);
+            var barnDTO = personService.add(new DTOAddPerson() { fornavn = fødselDTO.barn.Fornavn, etternavn = fødselDTO.barn.Etternavn, personnummer = fødselDTO.barn.Personnummer });
+            
 
-            fødselRepository.add(fødsel);
+            fødselRepository.add(
+                new Fødsel() 
+                { 
+                    mor = mor, 
+                    far = far, 
+                    barn = personService.getPerson(fødselDTO.barn.Personnummer)
+                });
             return true;
         }
 
-        public List<Fødsel> getAll()
+        public List<DTOGetFødsel> getAll()
         {
-            return fødselRepository.getAll();
+            var fødselDTOList = new List<DTOGetFødsel>();
+
+            var fødselList = fødselRepository.getAll();
+
+            foreach (var fødsel in fødselList)
+            {
+                
+                fødselDTOList.Add(fødselTilDTO(fødsel));
+            }
+            return fødselDTOList;
+        }
+
+
+        //Gjør Fødsel om til DTOGetFødsel
+        private DTOGetFødsel fødselTilDTO (Fødsel fødsel) 
+        {
+            var f = new DTOGetFødsel()
+            {
+                mor = new DTOPerson()
+                {
+                    navn = fødsel.mor.Fornavn + " " + fødsel.mor.Etternavn,
+                    kallenavn = fødsel.mor.Kallenavn
+                },
+                far = new DTOPerson()
+                {
+                    navn = fødsel.far.Fornavn + " " + fødsel.far.Etternavn,
+                    kallenavn = fødsel.far.Kallenavn
+                },
+                barn = new DTOPerson()
+                {
+                    navn = fødsel.barn.Fornavn + " " + fødsel.barn.Etternavn,
+                    kallenavn = fødsel.barn.Kallenavn
+                }
+            };
+
+            return f;
+
         }
     }
 }

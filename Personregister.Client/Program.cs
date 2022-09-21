@@ -6,10 +6,11 @@ using System.Text.Json;
 Console.WriteLine("Hello, World!");
 HttpClient client = new HttpClient();
 client.BaseAddress = new Uri("https://localhost:7213/");
-await Task.Delay(2000);
-await createFødsel(client);
-await createFødslerFraFil(client, ".\\Datafiler\\Fødsler.csv");
+await Task.Delay(20000);
+//await createFødsel(client);
+
 await createPersonerFraFil(client, ".\\Datafiler\\Personer.csv");
+await createFødslerFraFil(client, ".\\Datafiler\\Fødsler.csv");
 await createDødsfallFraFil(client, ".\\Datafiler\\Dødsfall.csv");
 await getPersoner(client);
 await getDødsfall(client);

@@ -12,6 +12,7 @@ namespace Personregister.Application.Contracts
     {
         public DTOAddPerson add(DTOAddPerson personDTO);
         public List<DTOPerson> getAll();
+        public Person getPerson(long personnummer);
 
     }
 }

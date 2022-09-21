@@ -22,7 +22,7 @@ namespace Personregister.WebAPI.Controllers
         }
 
         [HttpGet(Name = "GetFødsel")]
-        public IEnumerable<Fødsel> Get()
+        public IEnumerable<DTOGetFødsel> Get()
         {
             return fødselService.getAll();
         }
