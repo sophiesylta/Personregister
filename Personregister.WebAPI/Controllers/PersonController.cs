@@ -32,5 +32,11 @@ namespace Personregister.WebAPI.Controllers
 
             return personDTO;
         }
+
+        [HttpPut(Name = "EditPerson")]
+        public DTOEditPerson Put(DTOEditPerson person)
+        {
+            return _personService.edit(person);
+        }
     }
 }

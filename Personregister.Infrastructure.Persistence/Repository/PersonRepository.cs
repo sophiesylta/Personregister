@@ -2,6 +2,7 @@
 using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
+using Personregister.DTO;
 using Personregister.Infrastructure.Persistence.Context;
 
 namespace Personregister.Infrastructure.Persistence.Repository
@@ -37,6 +38,13 @@ namespace Personregister.Infrastructure.Persistence.Repository
         public Person getPerson(long personnummer)
         {
             return personregistercontext.Personer.Where(e => e.Personnummer == personnummer).FirstOrDefault();
+        }
+
+        public Person edit(Person person)
+        {
+            personregistercontext.Update(person);
+            personregistercontext.SaveChanges();
+            return person;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Personregister.Domene;
+using Personregister.DTO;
 
 namespace Personregister.Application.Contracts.Repository
 {
@@ -7,5 +8,6 @@ namespace Personregister.Application.Contracts.Repository
         List<Person> getAll();
         Person add(Person person);
         Person getPerson(long personnummer);
+        Person edit(Person person);
     }
 }

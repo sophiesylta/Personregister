@@ -47,5 +47,15 @@ namespace Personregister.Application
         {
             return personRepository.getPerson(personnummer);
         }
+
+        public DTOEditPerson edit(DTOEditPerson person)
+        {
+            var p = personRepository.getPerson(person.personnummer);
+            p.Fornavn = person.fornavn;
+            p.Etternavn = person.etternavn;
+            p.Kallenavn = kallenavnService.getKallenavn(person.fornavn, person.etternavn);
+            p = personRepository.edit(p);
+            return new DTOEditPerson() { personnummer = p.Personnummer, fornavn = p.Fornavn, etternavn = p.Etternavn, kallenavn = p.Kallenavn };
+        }
     }
 }
