@@ -50,10 +50,14 @@ namespace Personregister.Application
 
         public DTOEditPerson edit(DTOEditPerson person)
         {
+            if (person.fornavn == "" || person.fornavn == null) person.fornavn = "Ukjent";
+            if (person.etternavn == "" || person.etternavn == null) person.etternavn = "Ukjent";
+
             var p = personRepository.getPerson(person.personnummer);
             p.Fornavn = person.fornavn;
             p.Etternavn = person.etternavn;
-            p.Kallenavn = kallenavnService.getKallenavn(person.fornavn, person.etternavn);
+
+            p.Kallenavn = kallenavnService.getUniktKallenavn(person.kallenavn);
             p = personRepository.edit(p);
             return new DTOEditPerson() { personnummer = p.Personnummer, fornavn = p.Fornavn, etternavn = p.Etternavn, kallenavn = p.Kallenavn };
         }

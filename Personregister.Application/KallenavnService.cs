@@ -30,8 +30,10 @@ namespace Personregister.Application
             return getUniktKallenavn(kallenavn);
         }
 
-        private string getUniktKallenavn(string kallenavn)
+        public string getUniktKallenavn(string kallenavn)
         {
+            if (kallenavn == "" || kallenavn == null) kallenavn = "aaaa";
+
             List<Person> kallenavnListe = kallenavnRepository.getKallenavnListe(kallenavn);
 
             if (kallenavnListe.Count()==0) return kallenavn + "1";
