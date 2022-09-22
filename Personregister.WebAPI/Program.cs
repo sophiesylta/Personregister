@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IFødselRepository, FødselRepository>();
 builder.Services.AddScoped<IDødsfallRepository, DødsfallRepository>();
+builder.Services.AddScoped<IKallenavnRepository, KallenavnRepository>();
 builder.Services.AddScoped<IFødselService, FødselService>();
 builder.Services.AddScoped<INavnService, NavnService>();
 builder.Services.AddScoped<IDødsfallService, DødsfallService>();    

@@ -5,7 +5,7 @@ namespace Personregister.Application.Contracts
 {
     public interface IFødselService
     {
-        Boolean add(DTOFødsel fødselDTO);
+        DTOFødsel add(DTOFødsel fødselDTO);
 
         List<DTOGetFødsel> getAll();    
     }

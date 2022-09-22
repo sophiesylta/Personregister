@@ -28,7 +28,7 @@ namespace Personregister.WebAPI.Controllers
         }
 
         [HttpPost(Name = "PostFødsel")]
-        public Boolean Post(DTOFødsel fødselDTO)
+        public DTOFødsel Post(DTOFødsel fødselDTO)
         {
            return fødselService.add(fødselDTO);
 

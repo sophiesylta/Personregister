@@ -19,7 +19,7 @@ namespace Personregister.Application
             this.personService = personService;
         }
 
-        public Boolean add(DTOFødsel fødselDTO)
+        public DTOFødsel add(DTOFødsel fødselDTO)
         {
             //sjekk om mor eksisterer, i så fall bruk denne, ellers opprett ny
             var mor = personService.getPerson(fødselDTO.personnummerMor);
@@ -48,8 +48,6 @@ namespace Personregister.Application
                 personService.add(new DTOAddPerson() { fornavn = far.Fornavn, etternavn = far.Etternavn, personnummer = fødselDTO.personnummerFar });
             }
 
-            fødselDTO.barn.Etternavn = $"{mor.Etternavn}-{far.Etternavn}";
-
             //Sjekk om barn eksisterer, i så fall kast exception
 
             var barn = personService.getPerson(fødselDTO.barn.Personnummer);
@@ -59,7 +57,11 @@ namespace Personregister.Application
                 throw new Exception($"Barn finnes med personnummer {fødselDTO.barn.Personnummer} fra før ");
             }
 
-            var barnDTO = personService.add(new DTOAddPerson() { fornavn = fødselDTO.barn.Fornavn, etternavn = fødselDTO.barn.Etternavn, personnummer = fødselDTO.barn.Personnummer });
+            if (fødselDTO.barn.Etternavn == "") fødselDTO.barn.Etternavn = $"{mor.Etternavn}-{far.Etternavn}";
+
+
+
+            personService.add(new DTOAddPerson() { fornavn = fødselDTO.barn.Fornavn, etternavn = fødselDTO.barn.Etternavn, personnummer = fødselDTO.barn.Personnummer });
             
 
             fødselRepository.add(
@@ -69,7 +71,7 @@ namespace Personregister.Application
                     far = far, 
                     barn = personService.getPerson(fødselDTO.barn.Personnummer)
                 });
-            return true;
+            return fødselDTO;
         }
 
         public List<DTOGetFødsel> getAll()

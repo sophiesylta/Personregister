@@ -1,4 +1,6 @@
 ﻿using Personregister.Application.Contracts;
+using Personregister.Application.Contracts.Repository;
+using Personregister.Domene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,11 @@ namespace Personregister.Application
 {
     public class KallenavnService : IKallenavnService
     {
+        private readonly IKallenavnRepository kallenavnRepository;
+        public KallenavnService(IKallenavnRepository kallenavnRepository)
+        {
+            this.kallenavnRepository = kallenavnRepository;
+        }
 
         public string getKallenavn(string fornavn, string etternavn)
         {
@@ -19,6 +26,22 @@ namespace Personregister.Application
 
             var kallenavn = fornavn.Substring(0, Math.Min(fornavn.Length,2)) + etternavn.Substring(0, Math.Min(etternavn.Length, 2));
             kallenavn = kallenavn.ToLower();
+
+            return getUniktKallenavn(kallenavn);
+        }
+
+        private string getUniktKallenavn(string kallenavn)
+        {
+            List<Person> kallenavnListe = kallenavnRepository.getKallenavnListe(kallenavn);
+
+            if (kallenavnListe.Count()==0) return kallenavn + "1";
+
+            string sisteKallenavn = kallenavnListe[0].Kallenavn;
+            string nummerString = sisteKallenavn.Replace(kallenavn, "");
+            int nummer = Int32.Parse(nummerString);
+            nummer += 1;
+
+            kallenavn = kallenavn + nummer;
             return kallenavn;
         }
     }
