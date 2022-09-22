@@ -18,6 +18,7 @@ namespace Personregister.Infrastructure.Persistence.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Person>().HasIndex(u => u.Personnummer).IsUnique();
+            modelBuilder.Entity<Person>().HasIndex(e => e.Kallenavn).IsUnique();
         }
 
     }
