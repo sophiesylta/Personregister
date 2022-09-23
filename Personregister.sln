@@ -20,9 +20,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personregister.Application.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personregister.Infrastructure.Persistence.Test", "Personregister.Infrastructure.Persistence.Test\Personregister.Infrastructure.Persistence.Test.csproj", "{2C5AC575-7392-4DAD-9707-08C23E95A176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personregister.Client", "Personregister.Client\Personregister.Client.csproj", "{A31FF9A2-1CA2-4262-97F0-E64867FD3507}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personregister.Client", "Personregister.Client\Personregister.Client.csproj", "{A31FF9A2-1CA2-4262-97F0-E64867FD3507}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personregister.DTO", "Personregister.DTO\Personregister.DTO.csproj", "{598B813A-3C43-4C46-AA45-891F758BC339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personregister.DTO", "Personregister.DTO\Personregister.DTO.csproj", "{598B813A-3C43-4C46-AA45-891F758BC339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personregister.AngularGUI", "Personregister.AngularGUI\Personregister.AngularGUI.csproj", "{907B664D-0865-4634-A005-89058C0E521D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{598B813A-3C43-4C46-AA45-891F758BC339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{598B813A-3C43-4C46-AA45-891F758BC339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{598B813A-3C43-4C46-AA45-891F758BC339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{907B664D-0865-4634-A005-89058C0E521D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907B664D-0865-4634-A005-89058C0E521D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907B664D-0865-4634-A005-89058C0E521D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907B664D-0865-4634-A005-89058C0E521D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
