@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Personregister.Application
 {
-    public class PersonService : IPersonService
+    public class PersonService : IPersonService, IDtoPersonService
     {
         private readonly IPersonRepository personRepository;
         private readonly IKallenavnService kallenavnService;
@@ -22,20 +22,27 @@ namespace Personregister.Application
         }
         public DTOAddPerson add(DTOAddPerson personDTO)
         {
+
+            Person person =add(new Person() {Personnummer = personDTO.personnummer, Etternavn = personDTO.etternavn, Fornavn = personDTO.fornavn });
+            personDTO = new DTOAddPerson() { etternavn = person.Etternavn, fornavn = person.Fornavn, personnummer = person.Personnummer };
+            return personDTO;
+        }
+
+        public Person add(Person person)
+        {
             //Sjekke om person eksisterer, i så fall returneres denne, ellers opprett ny
-            var p = personRepository.getPerson(personDTO.personnummer);
-
-            if (p != null)
+            if (personRepository.getPerson(person.Personnummer) != null)
             {
-                return personDTO;
+                return person;
             }
-
-            Person person = new Person() {Personnummer = personDTO.personnummer, Etternavn = personDTO.etternavn, Fornavn = personDTO.fornavn };
 
             person.Kallenavn = kallenavnService.getKallenavn(person.Fornavn, person.Etternavn);
             personRepository.add(person);
-            return personDTO;
+            return person;
         }
+
+
+
 
         public List<DTOPerson> getAll() 
         {

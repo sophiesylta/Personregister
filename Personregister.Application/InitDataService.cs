@@ -13,7 +13,7 @@ namespace Personregister.Application
 {
     public class InitDataService : IInitDataService
     {
-        private readonly IPersonService personService;
+        private readonly IDtoPersonService personService;
         List<long> personnummerListe = new List<long>() { 12312312312, 23423423423, 78978978978 };
         List<long> barnePersonnummerListe = new List<long> { 34534534534, 45645645645, 56756756756 };
 
@@ -21,7 +21,7 @@ namespace Personregister.Application
         List<string> andebyenNavneLise = new List<string> { "Ole", "Dole", "Doffen" };
         List<long> andebyenBarnenummer = new List<long> { 44444444444, 55555555555, 66666666666 };
 
-        public InitDataService(IFødselService fødselService, INavnService navnService, IDødsfallService dødsfallService, IPersonService personService)
+        public InitDataService(IFødselService fødselService, INavnService navnService, IDødsfallService dødsfallService, IDtoPersonService personService)
         {
             //Legge til personer
             foreach (var personnummer in personnummerListe) 
@@ -53,7 +53,7 @@ namespace Personregister.Application
 
         }
 
-        public void leggTilAndeby(IPersonService personService, IFødselService fødselService, INavnService navnService)
+        public void leggTilAndeby(IDtoPersonService personService, IFødselService fødselService, INavnService navnService)
         {
             foreach (var personnummer in andebyenNummerListe)
             {
@@ -77,7 +77,7 @@ namespace Personregister.Application
             
         }
 
-        public void registrerDødsfall(IDødsfallService dødsfallService, INavnService navnService, IPersonService personService)
+        public void registrerDødsfall(IDødsfallService dødsfallService, INavnService navnService, IDtoPersonService personService)
         {
             (string fornavn, string etternavn) = navnService.getNavn(andebyenBarnenummer[2]);
             var person1 = personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, personnummer = andebyenBarnenummer[2] });

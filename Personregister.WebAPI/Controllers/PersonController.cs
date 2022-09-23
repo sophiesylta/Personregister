@@ -10,9 +10,9 @@ namespace Personregister.WebAPI.Controllers
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
-        private readonly IPersonService _personService;
+        private readonly IDtoPersonService _personService;
 
-        public PersonController(ILogger<PersonController> logger, IPersonService personService)
+        public PersonController(ILogger<PersonController> logger, IDtoPersonService personService)
         {
             _logger = logger;
             _personService = personService;

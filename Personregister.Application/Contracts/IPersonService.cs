@@ -8,12 +8,20 @@ using System.Threading.Tasks;
 
 namespace Personregister.Application.Contracts
 {
-    public interface IPersonService
+
+    public interface IDtoPersonService
     {
         public DTOAddPerson add(DTOAddPerson personDTO);
+ 
         public List<DTOPerson> getAll();
-        public Person getPerson(long personnummer);
         public DTOEditPerson edit(DTOEditPerson person);
 
+    }
+
+
+    public interface IPersonService
+    {
+        public Person add(Person person);
+        public Person getPerson(long personnummer);
     }
 }
