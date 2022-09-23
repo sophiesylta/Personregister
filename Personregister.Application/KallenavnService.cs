@@ -34,17 +34,23 @@ namespace Personregister.Application
         {
             if (kallenavn == "" || kallenavn == null) kallenavn = "aaaa";
 
-            List<Person> kallenavnListe = kallenavnRepository.getKallenavnListe(kallenavn);
+            List<string> kallenavnListe = kallenavnRepository.getKallenavnListe(kallenavn);
 
             if (kallenavnListe.Count()==0) return kallenavn + "1";
 
-            string sisteKallenavn = kallenavnListe[0].Kallenavn;
+            string sisteKallenavn = kallenavnListe[0];
             string nummerString = sisteKallenavn.Replace(kallenavn, "");
+       
+            kallenavn = kallenavn + AddIncreasedNumber(nummerString);
+            return kallenavn;
+        }
+
+
+        public  int AddIncreasedNumber(string nummerString)
+        {
             int nummer = Int32.Parse(nummerString);
             nummer += 1;
-
-            kallenavn = kallenavn + nummer;
-            return kallenavn;
+            return nummer;
         }
     }
 }

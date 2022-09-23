@@ -17,9 +17,9 @@ namespace Personregister.Infrastructure.Persistence.Repository
             this.personregistercontext = personregistercontext;
         }
 
-        public List<Person> getKallenavnListe(string kallenavn)
+        public List<string> getKallenavnListe(string kallenavn)
         {
-            return personregistercontext.Personer.Where(e => e.Kallenavn.Contains(kallenavn)).OrderByDescending(e => e.Kallenavn).ToList();
+            return personregistercontext.Personer.Where(e => e.Kallenavn.Contains(kallenavn)).OrderByDescending(e => e.Kallenavn).Select(e => e.Kallenavn).ToList();
 
             
 
