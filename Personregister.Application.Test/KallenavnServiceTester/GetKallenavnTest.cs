@@ -11,12 +11,10 @@ namespace Personregister.Application.Test.KallenavnServiceTester
     {
         Personregistercontext personregistercontext;
         IPersonRepository personrepository;
-        IKallenavnRepository kallenavnRepository;
         public GetKallenavnTest()
         {
             //kallenavnRepository = new Mock<IKallenavnRepository>();
             personregistercontext = new Personregistercontext(new DbContextOptionsBuilder<Personregistercontext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options);
-            kallenavnRepository = new KallenavnRepository(personregistercontext);
             personrepository = new PersonRepository(personregistercontext);
         }
 
@@ -24,7 +22,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
         [Trait("KallenavnService", "KallenavnService")]
         public void TestAtKallenavnBlirGenerert()
         {
-            KallenavnService kallenavnService = new KallenavnService(kallenavnRepository);
+            KallenavnService kallenavnService = new KallenavnService(personrepository);
             var kallenavnet=kallenavnService.getKallenavn("Fornavn", "Etternavn");
             Assert.True(!string.IsNullOrEmpty(kallenavnet));
         }
@@ -33,7 +31,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
         [Trait("KallenavnService", "KallenavnService")]
         public void TestLengdeKallenavnMin2()
         {
-            KallenavnService kallenavnService = new KallenavnService(kallenavnRepository);
+            KallenavnService kallenavnService = new KallenavnService(personrepository);
             var kallenavnet = kallenavnService.getKallenavn("Fornavn", "Etternavn");
             Assert.True(kallenavnet.Length >= 2);
         }
@@ -47,7 +45,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
 
         public void TestLengdeKallenavn(string fornavn, string etternavn, int minLengde)
         {
-            KallenavnService kallenavnService = new KallenavnService(kallenavnRepository);
+            KallenavnService kallenavnService = new KallenavnService(personrepository);
             var kallenavnet = kallenavnService.getKallenavn(fornavn, etternavn);
             Assert.True (kallenavnet.Length >= minLengde);
         }
@@ -58,7 +56,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
         [InlineData("Donald", null, 2)]
         public void TestTomNavn(string fornavn, string etternavn, int minLengde)
         {
-            KallenavnService kallenavnService = new KallenavnService(kallenavnRepository);
+            KallenavnService kallenavnService = new KallenavnService(personrepository);
             var kallenavnet = kallenavnService.getKallenavn(fornavn, etternavn);
             Assert.True(kallenavnet.Length >= minLengde);
         }
@@ -68,7 +66,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
         public void TestGirUnikeKallenavn()
         {
 
-            KallenavnService kallenavnService = new KallenavnService(kallenavnRepository);
+            KallenavnService kallenavnService = new KallenavnService(personrepository);
             var kallenavnet1= kallenavnService.getKallenavn("Donald", "Duck");
             personrepository.add(new Person() { Fornavn = "Donald", Etternavn = "Duck", Personnummer = 1, Kallenavn = kallenavnet1 });
             var kallenavnet2 = kallenavnService.getKallenavn("Dolly", "Duck");

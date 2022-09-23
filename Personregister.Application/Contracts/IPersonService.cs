@@ -15,5 +15,6 @@ namespace Personregister.Application.Contracts
         public Person getPerson(long personnummer);
         public DTOEditPerson edit(DTOEditPerson person);
 
+      
     }
 }

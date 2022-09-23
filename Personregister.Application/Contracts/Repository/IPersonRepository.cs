@@ -9,5 +9,7 @@ namespace Personregister.Application.Contracts.Repository
         Person add(Person person);
         Person getPerson(long personnummer);
         Person edit(Person person);
+
+        IQueryable<Person> QueryPerson();
     }
 }

@@ -12,10 +12,10 @@ namespace Personregister.Application
 {
     public class KallenavnService : IKallenavnService
     {
-        private readonly IKallenavnRepository kallenavnRepository;
-        public KallenavnService(IKallenavnRepository kallenavnRepository)
+        private readonly IPersonRepository personRepository;
+        public KallenavnService(IPersonRepository personRepository)
         {
-            this.kallenavnRepository = kallenavnRepository;
+            this.personRepository = personRepository;
         }
 
         public string getKallenavn(string fornavn, string etternavn)
@@ -32,19 +32,20 @@ namespace Personregister.Application
 
         public string getUniktKallenavn(string kallenavn)
         {
-            if (kallenavn == "" || kallenavn == null) kallenavn = "aaaa";
+            if (string.IsNullOrEmpty(kallenavn)) 
+                kallenavn = "aaaa";
 
-            List<Person> kallenavnListe = kallenavnRepository.getKallenavnListe(kallenavn);
+            int? maxnumber =
+                personRepository
+                .QueryPerson().Where(e=>e.Kallenavn.Contains(kallenavn)).Select(e=>e.Kallenavn)
+                .Select(e => e.Replace(kallenavn, ""))
+                .Where(e => !string.IsNullOrEmpty(e))
+                .Select(e => int.Parse(e))
+                .Max();
 
-            if (kallenavnListe.Count()==0) return kallenavn + "1";
-
-            string sisteKallenavn = kallenavnListe[0].Kallenavn;
-            string nummerString = sisteKallenavn.Replace(kallenavn, "");
-            int nummer = Int32.Parse(nummerString);
-            nummer += 1;
-
-            kallenavn = kallenavn + nummer;
-            return kallenavn;
+            return maxnumber.HasValue
+                ? kallenavn + maxnumber.HasValue + 1
+                : kallenavn + 1;
         }
     }
 }

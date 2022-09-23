@@ -46,5 +46,10 @@ namespace Personregister.Infrastructure.Persistence.Repository
             personregistercontext.SaveChanges();
             return person;
         }
+
+        public IQueryable<Person> QueryPerson()
+        {
+            return personregistercontext.Personer.AsQueryable();
+        }
     }
 }

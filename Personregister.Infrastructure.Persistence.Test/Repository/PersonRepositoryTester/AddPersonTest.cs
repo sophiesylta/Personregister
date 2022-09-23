@@ -11,14 +11,12 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
     {
         PersonRepository personRepository;
         Personregistercontext personregistercontext;
-        KallenavnRepository kallenavnRepository;
         IKallenavnService kallenavnService;
         INavnService navnService;
 
         public AddPersonTest()
         {
-            kallenavnRepository = new KallenavnRepository(personregistercontext);
-            kallenavnService = new KallenavnService(kallenavnRepository);
+            kallenavnService = new KallenavnService(personRepository);
             navnService = new NavnService();
             //1 Lage context med SQL-Server.
             //2 . Bruke en annen database. f.eks SQLLite ...
