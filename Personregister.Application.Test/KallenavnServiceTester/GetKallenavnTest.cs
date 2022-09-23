@@ -67,14 +67,30 @@ namespace Personregister.Application.Test.KallenavnServiceTester
         [Trait("KallenavnService", "KallenavnService")]
         public void TestGirUnikeKallenavn()
         {
+            /* lager vår egn mockList for kallenavn */
+            List<string> kallenavnListe = new List<string>();
 
-            KallenavnService kallenavnService = new KallenavnService(kallenavnRepository);
-            var kallenavnet1= kallenavnService.getKallenavn("Donald", "Duck");
-            personrepository.add(new Person() { Fornavn = "Donald", Etternavn = "Duck", Personnummer = 1, Kallenavn = kallenavnet1 });
-            var kallenavnet2 = kallenavnService.getKallenavn("Dolly", "Duck");
+            Mock<IKallenavnRepository> kallenavnRepository = new Mock<IKallenavnRepository>();
+            kallenavnRepository.Setup(e=>e.getKallenavnListe(It.IsAny<string>())).Returns((string s)=> kallenavnListe.Where(e=>e.Contains(s)).OrderByDescending(e => e).ToList());
 
-            Assert.False(kallenavnet1.Equals(kallenavnet2));
+            KallenavnService kallenavnService = new KallenavnService(kallenavnRepository.Object);
+
+            kallenavnListe.Add(kallenavnService.getUniktKallenavn("dodu"));
+            kallenavnListe.Add(kallenavnService.getUniktKallenavn("habu"));
+            kallenavnListe.Add(kallenavnService.getUniktKallenavn("dodu"));
+
+            kallenavnListe.Add(kallenavnService.getUniktKallenavn("dodu"));
+            kallenavnListe.Add(kallenavnService.getUniktKallenavn("habu"));
+            kallenavnListe.Add(kallenavnService.getUniktKallenavn("dodu"));
+            kallenavnListe.Add(kallenavnService.getUniktKallenavn("habu"));
+
+            int antallUlikeKallenavn = kallenavnListe.Distinct().Count();
+            Assert.Equal(kallenavnListe.Count, antallUlikeKallenavn);
+
+ //           Assert.False(kallenavnet1.Equals(kallenavnet2));
         }
+
+      
 
 
 

@@ -9,6 +9,6 @@ namespace Personregister.Application.Contracts.Repository
 {
     public interface IKallenavnRepository
     {
-        public List<Person> getKallenavnListe(string kallenavn);
+        public List<string> getKallenavnListe(string kallenavn);
     }
 }
