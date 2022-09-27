@@ -26,23 +26,22 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
         {
             Person person1 = new Person()
             {
-                Personnummer = 78945612312
+                Personnummer = 78945612312,
+                Fornavn = "fornavn1",
+                Etternavn = "etternavn1"
             };
             personRepository.add(person1);
 
             Person person2 = new Person()
             {
-                Personnummer = 78978945645
+                Personnummer = 78978945645,
+                Fornavn = "fornavn2",
+                Etternavn = "etternavn2"
             };
             personRepository.add(person2);
 
             Assert.Equal(2, personRepository.getAll().Count());
 
         }
-
-
-       
-
-
     }
 }

@@ -1,0 +1,24 @@
+<h1 id="tableLabel">Fodsler</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!fodsler"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="fodsler">
+  <thead>
+    <tr>
+      <th>Mors navn</th>
+      <th>Fars navn</th>
+      <th>Barns navn</th>
+      <th>Fødselsdato</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let fodsel of fodsler">
+      <td>{{ fodsel.mor.navn }}</td>
+      <td>{{ fodsel.far.navn }}</td>
+      <td>{{ fodsel.barn.navn }}</td>
+      <td>{{ fodsel.fodselsdato }}</td>
+    </tr>
+  </tbody>
+</table>

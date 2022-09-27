@@ -20,7 +20,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             INavnService navnService = new NavnService();
 
 
-            fødselService = new FødselService(fødselRepository.Object, navnService, personService.Object);
+            fødselService = new FødselService(fødselRepository.Object, personService.Object);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             DTOFødsel fødselDTO = LagTestFødsel();
             var fødsel = fødselService.add(fødselDTO);
             //ingen person er registrert fra før ...skal da legge til mor,far og barn i person ,  og en fødsel 
-            personService.Verify(e => e.add(It.IsAny<Person>()), Times.Exactly(3));
+            personService.Verify(e => e.findOrCreate(It.IsAny<long>()), Times.Exactly(3));
             fødselRepository.Verify(e=>e.add(It.IsAny<Fødsel>()),Times.Once);
 
             Assert.NotNull(fødselDTO);
@@ -60,7 +60,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             const String farsEtternavn = "FarsEtternavn";
             const long farsPersonnummer = 32345678901;
 
-            personService.Setup(e => e.getPerson(32345678901)).Returns(new Person() { Personnummer = farsPersonnummer, Fornavn = farsFornavn, Etternavn = farsEtternavn });
+            personService.Setup(e => e.findOrCreate(32345678901)).Returns(()=>new Person() { Personnummer = farsPersonnummer, Fornavn = farsFornavn, Etternavn = farsEtternavn });
 
             DTOFødsel fødselDTO = LagTestFødsel();
             fødselDTO.personnummerFar = farsPersonnummer;
@@ -72,7 +72,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             //Assert.Equal(farsEtternavn, fødsel.far.Etternavn);
 
 
-            personService.Verify(e => e.add(It.IsAny<Person>()), Times.Exactly(2));
+            personService.Verify(e => e.findOrCreate(It.IsAny<long>()), Times.Exactly(2));
             fødselRepository.Verify(e => e.add(It.IsAny<Fødsel>()), Times.Once);
         }
 
@@ -86,7 +86,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             const String barnsEtternavn = "barnsEtternavn";
             const long barnsPersonnummer = 12345678901;
 
-            personService.Setup(e => e.getPerson(12345678901)).Returns(new Person() { Personnummer = 12345678901, Fornavn = barnsFornavn, Etternavn = barnsEtternavn });
+            personService.Setup(e => e.findOrCreate(12345678901)).Returns(new Person() { Personnummer = 12345678901, Fornavn = barnsFornavn, Etternavn = barnsEtternavn });
 
             DTOFødsel fødselDTO = LagTestFødsel();
             fødselDTO.barn.Personnummer = barnsPersonnummer;
@@ -96,7 +96,7 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             //Assert.Equal(barnsEtternavn, fødsel.barn.Etternavn);
             Assert.Throws<Exception>(()=>fødselService.add(fødselDTO));
 
-            personService.Verify(e => e.add(It.IsAny<Person>()), Times.Exactly(2));
+            personService.Verify(e => e.findOrCreate(It.IsAny<long>()), Times.Exactly(2));
             fødselRepository.Verify(e => e.add(It.IsAny<Fødsel>()), Times.Never);
         }
 

@@ -43,7 +43,7 @@ async Task<Boolean> getDødsfall(HttpClient client)
         List<DTOGetDødsfall> dødsfall = await client.GetFromJsonAsync<List<DTOGetDødsfall>>("Dødsfall");
         foreach (var d in dødsfall)
         {
-            Console.WriteLine("Navn: "+d.fornavn +" " +"Dødsårsak: "+ d.dødsårsak);
+            Console.WriteLine("Navn: "+d.fornavn +" " +"Dødsårsak: "+ d.dodsarsak);
         }
     }
     catch (Exception exception)

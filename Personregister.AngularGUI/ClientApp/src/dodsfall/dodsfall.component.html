@@ -1,0 +1,22 @@
+<h1 id="tableLabel">Dødsfall</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!dodsfalls"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="dodsfalls">
+  <thead>
+    <tr>
+      <th>Fornavn</th>
+      <th>Etternavn</th>
+      <th>Dødsårsak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dodsfall of dodsfalls">
+      <td>{{ dodsfall.fornavn }}</td>
+      <td>{{ dodsfall.etternavn }}</td>
+      <td>{{ dodsfall.dodsarsak }}</td>
+    </tr>
+  </tbody>
+</table>
