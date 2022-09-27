@@ -36,14 +36,16 @@ namespace Personregister.Application
             //Hvis barnets etternavn ikke er oppgitt skal mors og fars etternavn kombineres
             if (fødselDTO.barn.Etternavn == "") fødselDTO.barn.Etternavn = $"{mor.Etternavn}-{far.Etternavn}";
 
-            personService.add(new Person() { Fornavn = fødselDTO.barn.Fornavn, Etternavn = fødselDTO.barn.Etternavn, Personnummer = fødselDTO.barn.Personnummer });
+            barn = new Person() { Fornavn = fødselDTO.barn.Fornavn, Etternavn = fødselDTO.barn.Etternavn, Personnummer = fødselDTO.barn.Personnummer };
+
+            personService.add(barn);
 
             fødselRepository.add(
                 new Fødsel()
                 {
                     mor = mor,
                     far = far,
-                    barn = personService.getPerson(fødselDTO.barn.Personnummer),
+                    barn = barn,
                     fødselTid = fødselDTO.fødselTid
                 });
             return fødselDTO;
