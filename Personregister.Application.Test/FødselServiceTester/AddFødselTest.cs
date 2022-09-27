@@ -28,9 +28,19 @@ namespace Personregister.Application.Test.KallenavnServiceTester
         public void TestFødselService()
         {
             DTOFødsel fødselDTO = LagTestFødsel();
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerFar)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerFar ,Etternavn="Etternavn" });
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerMor)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerMor,Etternavn = "Etternavn" });
+
             var fødsel = fødselService.add(fødselDTO);
+
+
+
             //ingen person er registrert fra før ...skal da legge til mor,far og barn i person ,  og en fødsel 
-            personService.Verify(e => e.findOrCreate(It.IsAny<long>()), Times.Exactly(3));
+
+
+            personService.Verify(e => e.findOrCreate(It.IsAny<long>()), Times.Exactly(2));
+            personService.Verify(e => e.getPerson(It.IsAny<long>()), Times.Exactly(1));
+
             fødselRepository.Verify(e=>e.add(It.IsAny<Fødsel>()),Times.Once);
 
             Assert.NotNull(fødselDTO);
@@ -41,6 +51,9 @@ namespace Personregister.Application.Test.KallenavnServiceTester
         public void TestMorSkalOpprettesHvisIkkeFinnesFraFør()
         {
             DTOFødsel fødselDTO = LagTestFødsel();
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerFar)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerFar });
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerMor)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerMor });
+
 
             var fødsel = fødselService.add(fødselDTO);
 
@@ -60,9 +73,14 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             const String farsEtternavn = "FarsEtternavn";
             const long farsPersonnummer = 32345678901;
 
-            personService.Setup(e => e.findOrCreate(32345678901)).Returns(()=>new Person() { Personnummer = farsPersonnummer, Fornavn = farsFornavn, Etternavn = farsEtternavn });
 
             DTOFødsel fødselDTO = LagTestFødsel();
+
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerFar)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerFar, Fornavn = farsFornavn, Etternavn = farsEtternavn });
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerMor)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerMor });
+
+
+
             fødselDTO.personnummerFar = farsPersonnummer;
 
             var fødsel = fødselService.add(fødselDTO);
@@ -86,9 +104,14 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             const String barnsEtternavn = "barnsEtternavn";
             const long barnsPersonnummer = 12345678901;
 
-            personService.Setup(e => e.findOrCreate(12345678901)).Returns(new Person() { Personnummer = 12345678901, Fornavn = barnsFornavn, Etternavn = barnsEtternavn });
-
             DTOFødsel fødselDTO = LagTestFødsel();
+
+            personService.Setup(e => e.getPerson(12345678901)).Returns(()=>new Person() { Personnummer = 12345678901, Fornavn = barnsFornavn, Etternavn = barnsEtternavn });
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerFar)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerFar });
+            personService.Setup(e => e.findOrCreate(fødselDTO.personnummerMor)).Returns(() => new Person() { Personnummer = fødselDTO.personnummerMor });
+
+
+
             fødselDTO.barn.Personnummer = barnsPersonnummer;
 
             //test barn navn skal være utfylt...
@@ -97,6 +120,8 @@ namespace Personregister.Application.Test.KallenavnServiceTester
             Assert.Throws<Exception>(()=>fødselService.add(fødselDTO));
 
             personService.Verify(e => e.findOrCreate(It.IsAny<long>()), Times.Exactly(2));
+            personService.Verify(e => e.getPerson(It.IsAny<long>()), Times.Exactly(1));
+
             fødselRepository.Verify(e => e.add(It.IsAny<Fødsel>()), Times.Never);
         }
 
