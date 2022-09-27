@@ -14,11 +14,13 @@ namespace Personregister.Application
     {
         private readonly IPersonRepository personRepository;
         private readonly IKallenavnService kallenavnService;
+        private readonly INavnService navnService;
 
-        public PersonService(IPersonRepository personRepository, IKallenavnService kallenavnService)
+        public PersonService(IPersonRepository personRepository, IKallenavnService kallenavnService, INavnService navnservice)
         {
             this.personRepository = personRepository;
             this.kallenavnService = kallenavnService;
+            this.navnService = navnservice;
         }
         public DTOAddPerson add(DTOAddPerson personDTO)
         {
@@ -41,6 +43,19 @@ namespace Personregister.Application
             return person;
         }
 
+        public Person findOrCreate(long personnummer)
+        {
+            var person = getPerson(personnummer);
+
+            if (person == null)
+            {
+                person = new Person() { Personnummer = personnummer };
+                (person.Fornavn, person.Etternavn) = navnService.getNavn(personnummer);
+                add(person);
+            }
+
+            return person;
+        }
 
 
 

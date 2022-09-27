@@ -9,25 +9,23 @@ namespace Personregister.Application
     public class FødselService : IFødselService
     {
         private readonly IFødselRepository fødselRepository;
-        private readonly INavnService navnService;
         private readonly IPersonService personService;
 
-        public FødselService(IFødselRepository fødselRepository, INavnService navnService, IPersonService personService)
+        public FødselService(IFødselRepository fødselRepository, IPersonService personService)
         {
             this.fødselRepository = fødselRepository;
-            this.navnService = navnService;
             this.personService = personService;
         }
 
         public DTOFødsel add(DTOFødsel fødselDTO)
         {
             //sjekk om mor eksisterer, i så fall bruk denne, ellers opprett ny
-            Person mor = FindOrCreate(fødselDTO.personnummerMor);
+            Person mor = personService.findOrCreate(fødselDTO.personnummerMor);
+
             //Sjekk om far eksisterer, i så fall bruk denne, ellers opprett ny
-            Person far = FindOrCreate(fødselDTO.personnummerFar);
+            Person far = personService.findOrCreate(fødselDTO.personnummerFar);
         
             //Sjekk om barn eksisterer, i så fall kast exception
-
             var barn = personService.getPerson(fødselDTO.barn.Personnummer);
 
             if (barn != null)
@@ -35,35 +33,20 @@ namespace Personregister.Application
                 throw new Exception($"Barn finnes med personnummer {fødselDTO.barn.Personnummer} fra før ");
             }
 
+            //Hvis barnets etternavn ikke er oppgitt skal mors og fars etternavn kombineres
             if (fødselDTO.barn.Etternavn == "") fødselDTO.barn.Etternavn = $"{mor.Etternavn}-{far.Etternavn}";
 
-
-
             personService.add(new Person() { Fornavn = fødselDTO.barn.Fornavn, Etternavn = fødselDTO.barn.Etternavn, Personnummer = fødselDTO.barn.Personnummer });
-
 
             fødselRepository.add(
                 new Fødsel()
                 {
                     mor = mor,
                     far = far,
-                    barn = personService.getPerson(fødselDTO.barn.Personnummer)
+                    barn = personService.getPerson(fødselDTO.barn.Personnummer),
+                    fødselTid = fødselDTO.fødselTid
                 });
             return fødselDTO;
-        }
-
-        private Person FindOrCreate(long personnummer)
-        {
-            var person = personService.getPerson(personnummer);
-
-            if (person == null)
-            {
-                person = new Person() { Personnummer = personnummer };
-                //TODO ...kan denne fjernes?
-                personService.add(person);
-            }
-
-            return person;
         }
 
         public List<DTOGetFødsel> getAll()
@@ -79,7 +62,6 @@ namespace Personregister.Application
             }
             return fødselDTOList;
         }
-
 
         //Gjør Fødsel om til DTOGetFødsel
         private DTOGetFødsel fødselTilDTO (Fødsel fødsel) 
@@ -100,7 +82,9 @@ namespace Personregister.Application
                 {
                     navn = fødsel.barn.Fornavn + " " + fødsel.barn.Etternavn,
                     kallenavn = fødsel.barn.Kallenavn
-                }
+                },
+
+                fodselsdato = fødsel.fødselTid.ToShortDateString()
             };
 
             return f;

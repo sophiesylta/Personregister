@@ -9,6 +9,7 @@ namespace Personregister.DTO
     public class DTOGetDødsfall
     {
         public string fornavn { get; set; }
-        public string dødsårsak { get; set; }
+        public string etternavn { get; set; }
+        public string dodsarsak { get; set; }
     }
 }

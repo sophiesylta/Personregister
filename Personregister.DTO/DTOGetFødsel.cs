@@ -11,5 +11,6 @@ namespace Personregister.DTO
         public DTOPerson mor { get; set;}
         public DTOPerson far { get; set; }
         public DTOPerson barn { get; set; }
+        public string fodselsdato { get; set; }
     }
 }

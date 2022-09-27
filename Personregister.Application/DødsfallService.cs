@@ -9,14 +9,14 @@ namespace Personregister.Application
     public class DødsfallService : IDødsfallService
     {
         private readonly IDødsfallRepository dødsfallRepository;
-        private readonly IPersonRepository personRepository;
+        private readonly IPersonService personService;
         private readonly ILogger<DødsfallService> logger;
 
-        public DødsfallService(IDødsfallRepository dødsfallRepository, IPersonRepository personRepository, ILogger<DødsfallService> logger)
+        public DødsfallService(IDødsfallRepository dødsfallRepository, IPersonService personService, ILogger<DødsfallService> logger)
         {
             this.dødsfallRepository = dødsfallRepository;
 
-            this.personRepository = personRepository;
+            this.personService = personService;
             this.logger = logger;
         }
 
@@ -31,7 +31,7 @@ namespace Personregister.Application
             };
 
             //sjekk om person eksisterer, i så fall bruk denne, ellers throw exception
-            var person = personRepository.getPerson(dødsfall.person.Personnummer);
+            var person = personService.getPerson(dødsfall.person.Personnummer);
 
             if (person == null)
             {
@@ -60,7 +60,7 @@ namespace Personregister.Application
             var dødsfallListe = dødsfallRepository.GetAll();
             foreach (var d in dødsfallListe)
             {
-                var dto = new DTOGetDødsfall() { fornavn = d.person.Fornavn, dødsårsak = d.dødsårsak };
+                var dto = new DTOGetDødsfall() { fornavn = d.person.Fornavn, etternavn = d.person.Etternavn, dodsarsak = d.dødsårsak };
                 dødsfallDTOListe.Add(dto);
             }
             return dødsfallDTOListe;

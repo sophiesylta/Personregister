@@ -16,21 +16,21 @@ namespace Personregister.Application.Test.DødsfallServiceTester
     {
         DødsfallService dødsfallService;
         Mock<IDødsfallRepository> dødsfallRepository;
-        Mock<IPersonRepository> personRepository;
+        Mock<IPersonService> personService;
         Mock<ILogger<DødsfallService>> logger;
         
 
         public AddDødsfallTest()
         {
             dødsfallRepository = new Mock<IDødsfallRepository>();
-            personRepository = new Mock<IPersonRepository>();
+            personService = new Mock<IPersonService>();
             //trenger ikke mocke navnService , da den ikke har avhenigheter...
             INavnService navnService = new NavnService();
             logger = new Mock<ILogger<DødsfallService>>();
              
 
 
-            dødsfallService = new DødsfallService(dødsfallRepository.Object, personRepository.Object, logger.Object);
+            dødsfallService = new DødsfallService(dødsfallRepository.Object, personService.Object, logger.Object);
         }
 
         [Fact]
@@ -39,8 +39,8 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         {
             var dødsfall = nyttDødsfall();
             var dødsfallDTO = nyDødsfallDTO();
-            
-            personRepository.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
+
+            personService.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
 
             dødsfall = dødsfallService.add(dødsfallDTO);
 
@@ -69,7 +69,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             var dødsfall = nyttDødsfall();
             var dødsfallDTO = nyDødsfallDTO();
 
-            personRepository.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
+            personService.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
 
             dødsfallRepository.Setup(e => e.getDødsfall(dødsfall.person.Personnummer)).Returns(dødsfall);
 
