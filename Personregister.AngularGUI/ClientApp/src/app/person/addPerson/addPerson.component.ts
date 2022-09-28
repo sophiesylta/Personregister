@@ -18,7 +18,7 @@ export class AddPersonComponent {
 
   addPerson()
   {
-    this.person = new DTOAddPerson();
+    console.log("add person");
     this.http.post(this.baseUrl + 'api/Person', this.person).subscribe(result => { }
       , error => console.error(error));
   }

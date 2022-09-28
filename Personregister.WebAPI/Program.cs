@@ -25,6 +25,7 @@ builder.Services.AddScoped<IInitDataService, InitDataService>();
 builder.Services.AddScoped<IKallenavnService, KallenavnService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IDtoPersonService, PersonService>();
+builder.Services.AddScoped<IDtoGetPersonService, DtoGetPersonService>();
 
 
 

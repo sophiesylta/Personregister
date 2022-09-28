@@ -19,9 +19,9 @@ namespace Personregister.WebAPI.Controllers
         }
 
         [HttpGet(Name = "GetPerson")]
-        public IEnumerable<DTOPerson> Get()
+        public IEnumerable<DTOPerson> Get([FromServices] IDtoGetPersonService dtoGetPersonService)
         {
-            return _personService.getAll();
+            return dtoGetPersonService.getAll();
         }
 
         [HttpPost(Name = "PostPerson")]

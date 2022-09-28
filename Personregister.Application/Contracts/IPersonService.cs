@@ -12,10 +12,13 @@ namespace Personregister.Application.Contracts
     public interface IDtoPersonService
     {
         public DTOAddPerson add(DTOAddPerson personDTO);
- 
-        public List<DTOPerson> getAll();
         public DTOEditPerson edit(DTOEditPerson person);
 
+    }
+
+    public interface IDtoGetPersonService
+    {
+        public List<DTOPerson> getAll();
     }
 
 

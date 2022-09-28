@@ -13,9 +13,18 @@ export class PersonComponent {
       this.personer = result;
     }, error => console.error(error));
   }
+
+  registrerDodPerson(kallenavn: string) {
+    console.log("Registrer dødsfall" + kallenavn);
+    //this.http.post(this.baseUrl + 'api/Person', this.person).subscribe(result => { }
+    //  , error => console.error(error));
+  }
+
 }
+
 
 export interface DTOPerson {
   navn: string;
   kallenavn: string;
+  erDod: Boolean;
 }

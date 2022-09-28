@@ -16,11 +16,13 @@ namespace Personregister.Application
         private readonly IKallenavnService kallenavnService;
         private readonly INavnService navnService;
 
+
         public PersonService(IPersonRepository personRepository, IKallenavnService kallenavnService, INavnService navnservice)
         {
             this.personRepository = personRepository;
             this.kallenavnService = kallenavnService;
             this.navnService = navnservice;
+
         }
         public DTOAddPerson add(DTOAddPerson personDTO)
         {
@@ -58,12 +60,6 @@ namespace Personregister.Application
         }
 
 
-
-        public List<DTOPerson> getAll() 
-        {
-            return personRepository.getAll().Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn }).ToList();
-
-        }
 
         public Person getPerson(long personnummer)
         {
