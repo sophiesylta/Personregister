@@ -11,6 +11,7 @@ import { PersonComponent } from './person/person.component';
 import { FodselComponent } from './fodsel/fodsel.component';
 import { DodsfallComponent } from './dodsfall/dodsfall.component';
 import { AddPersonComponent } from './person/addPerson/addPerson.component';
+import { AddDodsfallComponent } from './dodsfall/addDodsfall/addDodsfall.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AddPersonComponent } from './person/addPerson/addPerson.component';
     PersonComponent,
     FodselComponent,
     DodsfallComponent,
-    AddPersonComponent
+    AddPersonComponent,
+    AddDodsfallComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -31,7 +33,8 @@ import { AddPersonComponent } from './person/addPerson/addPerson.component';
       { path: 'person', component: PersonComponent },
       { path: 'fodsel', component: FodselComponent },
       { path: 'dodsfall', component: DodsfallComponent },
-      { path: 'addPerson', component: AddPersonComponent }
+      { path: 'addPerson', component: AddPersonComponent },
+      { path: 'addDodsfall', component: AddDodsfallComponent },
     ])
   ],
   providers: [],

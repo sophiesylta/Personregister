@@ -149,8 +149,8 @@ async Task<Boolean> createDødsfallFraFil(HttpClient client, string filnavn)
             DTODødsfall dødsfallDTO = new DTODødsfall()
             {
                 personnummer = Convert.ToInt64(data[0]),
-                dødsårsak = data[1],
-                dødsTid = DateTime.Parse(data[2])
+                dodsarsak = data[1],
+                dodsTid = DateTime.Parse(data[2])
             };
             var result = await client.PostAsJsonAsync<DTODødsfall>("Dødsfall", dødsfallDTO);
 

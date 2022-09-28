@@ -100,8 +100,8 @@ namespace Personregister.Application.Test.DødsfallServiceTester
            DTODødsfall dødsfallDTO = new DTODødsfall()
             {
                 personnummer = nyttDødsfall().person.Personnummer,
-                dødsårsak = nyttDødsfall().dødsårsak,
-                dødsTid = nyttDødsfall().dødsTid
+                dodsarsak = nyttDødsfall().dødsårsak,
+                dodsTid = nyttDødsfall().dødsTid
             };
 
             return dødsfallDTO;

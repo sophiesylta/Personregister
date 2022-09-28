@@ -17,7 +17,7 @@
       <td>{{ person.navn }}</td>
       <td>{{ person.kallenavn }}</td>
       <td>{{ person.erDod }}</td>
-      <td *ngIf="!person.erDod"><button (click) ="registrerDodPerson(person.kallenavn)">Registrer dødsfall</button></td>
+      <td *ngIf="!person.erDod"><button [routerLink]="['/addDodsfall']">Registrer dødsfall</button></td>
     </tr>
   </tbody>
 </table>

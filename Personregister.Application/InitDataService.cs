@@ -85,8 +85,8 @@ namespace Personregister.Application
             dødsfallService.add(new DTODødsfall()
             {
                 personnummer = person1.personnummer,
-                dødsTid = new DateTime(2022, 12, 24, 7, 0, 0),
-                dødsårsak = "Sjelden genetisk sykdom" 
+                dodsTid = new DateTime(2022, 12, 24, 7, 0, 0),
+                dodsarsak = "Sjelden genetisk sykdom" 
             });
 
             (fornavn, etternavn) = navnService.getNavn(andebyenNummerListe[1]);
@@ -95,8 +95,8 @@ namespace Personregister.Application
             dødsfallService.add(new DTODødsfall()
             {
                 personnummer = person2.personnummer,
-                dødsTid = new DateTime(2022, 12, 27, 13, 10, 22),
-                dødsårsak = "Sorg" 
+                dodsTid = new DateTime(2022, 12, 27, 13, 10, 22),
+                dodsarsak = "Sorg" 
             });
         }
     }

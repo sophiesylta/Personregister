@@ -10,7 +10,8 @@ const PROXY_CONFIG = [
       "/swagger",
       "/api/Person",
       "/api/Fodsel",
-      "/api/Dodsfall"
+      "/api/Dodsfall",
+       "/api/AddDodsfall"
    ],
     target: target,
     secure: false,
