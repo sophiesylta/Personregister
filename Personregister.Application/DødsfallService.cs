@@ -26,8 +26,8 @@ namespace Personregister.Application
             var dødsfall = new Dødsfall()
             {
                 person = new Person() { Personnummer = dødsfallDTO.personnummer },
-                dødsårsak = dødsfallDTO.dødsårsak,
-                dødsTid = dødsfallDTO.dødsTid
+                dødsårsak = dødsfallDTO.dodsarsak,
+                dødsTid = dødsfallDTO.dodsTid
             };
 
             //sjekk om person eksisterer, i så fall bruk denne, ellers throw exception
