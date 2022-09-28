@@ -1,7 +1,7 @@
 <h1 id="tableLabel">Personer</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
-
+<a class="" [routerLink]="['/addPerson']">Legg til person</a>
 <p *ngIf="!personer"><em>Loading...</em></p>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="personer">
@@ -9,12 +9,15 @@
     <tr>
       <th>Navn</th>
       <th>Kallenavn</th>
+      <th>Er død</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let person of personer">
       <td>{{ person.navn }}</td>
       <td>{{ person.kallenavn }}</td>
+      <td>{{ person.erDod }}</td>
+      <td *ngIf="!person.erDod"><button (click) ="registrerDodPerson(person.kallenavn)">Registrer dødsfall</button></td>
     </tr>
   </tbody>
 </table>

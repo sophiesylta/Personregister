@@ -1,8 +1,10 @@
-<h1 id="tableLabel">Personer</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
-
-fornavn = {{ person.fornavn }}
-etternavn = {{ person.etternavn }}
-personnummer = {{ person.personnummer }}
-
+<a class="" [routerLink]="['/person']">Hent personer</a>
+<br/>
+<br />
+Fornavn
+<input type="text" [(ngModel)]="person.fornavn" />
+Etternavn
+<input type="text" [(ngModel)]="person.etternavn" />
+Personnummer
+<input type="text" [(ngModel)]="person.personnummer" />
+<button (click)="addPerson()">Add person</button>

@@ -9,7 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { PersonComponent } from './person/person.component';
 import { FodselComponent } from './fodsel/fodsel.component';
-import { DodsfallComponent } from '../dodsfall/dodsfall.component';
+import { DodsfallComponent } from './dodsfall/dodsfall.component';
 import { AddPersonComponent } from './person/addPerson/addPerson.component';
 
 @NgModule({

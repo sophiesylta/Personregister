@@ -5,6 +5,6 @@
         public string navn { get; set; }
         public string kallenavn { get; set; }
 
-
+        public Boolean erDod { get; set; }
     }
 }
