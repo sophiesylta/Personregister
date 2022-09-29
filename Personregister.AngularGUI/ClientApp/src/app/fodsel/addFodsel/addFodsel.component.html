@@ -1,0 +1,28 @@
+<a class="" [routerLink]="['/fodsel']">Hent fødsel</a>
+<br />
+<br />
+Mors personnummer <br />
+<input type="text" [(ngModel)]="fodsel.personnummerMor" />
+<br/>
+<br />
+Fars personnummer <br />
+<input type="text" [(ngModel)]="fodsel.personnummerFar" />
+<br />
+<br />
+Barns personnummer <br />
+<input type="text" [(ngModel)]="fodsel.barn.personnummer" />
+<br />
+<br />
+Barns fornavn <br />
+<input type="text" [(ngModel)]="fodsel.barn.fornavn" />
+<br />
+<br />
+Barns etternavn <br />
+<input type="text" [(ngModel)]="fodsel.barn.etternavn" />
+<br />
+<br />
+Fødselsdato og klokkeslett <br />
+<input type="text" [(ngModel)]="fodsel.fodselsdato" />
+<br />
+<br />
+<button (click)="addFodsel()">Add fødsel</button>

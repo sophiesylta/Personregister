@@ -58,7 +58,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             // Sjekker at riktig feilmelding blir kastet når personen ikke finnes fra før
             var ex = Assert.Throws<Exception>(()=> dødsfallService.add(dødsfallDTO));
 
-            Assert.Equal($"Finner ikke person med personnummer{dødsfallDTO.personnummer}", ex.Message);
+            Assert.Equal("Finner ikke person", ex.Message);
 
         }
 

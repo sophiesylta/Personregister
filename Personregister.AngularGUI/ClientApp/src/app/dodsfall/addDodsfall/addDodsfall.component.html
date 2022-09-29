@@ -1,11 +1,17 @@
-<a class="" [routerLink]="['/person']">Hent personer</a>
+<a class="" [routerLink]="['/dodsfall']">Hent dødsfall</a>
 <br />
 <br />
-Personnummer
+Personnummer <br />
 <input type="text" [(ngModel)]="dodsfall.personnummer" />
-Dødsårsak
+<br />
+<br />
+Dødsårsak <br />
 <input type="text" [(ngModel)]="dodsfall.dodsarsak" />
-Dato/tid
+<br />
+<br />
+Dato/tid <br />
 <input type="text" [(ngModel)]="dodsfall.dodsTid" />
+<br />
+<br />
 <button (click)="addDodsfall()">Add dødsfall</button>
 

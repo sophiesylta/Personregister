@@ -12,6 +12,7 @@ import { FodselComponent } from './fodsel/fodsel.component';
 import { DodsfallComponent } from './dodsfall/dodsfall.component';
 import { AddPersonComponent } from './person/addPerson/addPerson.component';
 import { AddDodsfallComponent } from './dodsfall/addDodsfall/addDodsfall.component';
+import { AddFodselComponent } from './fodsel/addFodsel/addFodsel.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AddDodsfallComponent } from './dodsfall/addDodsfall/addDodsfall.compone
     FodselComponent,
     DodsfallComponent,
     AddPersonComponent,
-    AddDodsfallComponent
+    AddDodsfallComponent,
+    AddFodselComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,6 +37,7 @@ import { AddDodsfallComponent } from './dodsfall/addDodsfall/addDodsfall.compone
       { path: 'dodsfall', component: DodsfallComponent },
       { path: 'addPerson', component: AddPersonComponent },
       { path: 'addDodsfall', component: AddDodsfallComponent },
+      { path: 'addFodsel', component: AddFodselComponent }
     ])
   ],
   providers: [],

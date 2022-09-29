@@ -15,8 +15,11 @@ export class PersonComponent {
 
     this.http = http;
     this.baseUrl = baseUrl;
-
-    http.get<DTOPerson[]>(baseUrl + 'api/Person').subscribe(result => {
+    this.getPersoner();
+    
+  }
+  getPersoner() {
+    this.http.get<DTOPerson[]>(this.baseUrl + 'api/Person').subscribe(result => {
       this.personer = result;
     }, error => console.error(error));
   }
@@ -25,7 +28,7 @@ export class PersonComponent {
     console.log("Registrer dødsfall" + kallenavn);
     let dodsfall = new DTODodsfall();
     dodsfall.kallenavn = kallenavn;
-    this.http.post(this.baseUrl + 'api/Dodsfall', dodsfall).subscribe(result => { },
+    this.http.post(this.baseUrl + 'api/Dodsfall', dodsfall).subscribe(result => { this.getPersoner() },
       error => console.error(error));
   }
 

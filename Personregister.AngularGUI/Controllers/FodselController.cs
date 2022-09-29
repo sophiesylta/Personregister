@@ -18,5 +18,14 @@ namespace Personregister.AngularGUI.Controllers
             List<DTOGetFødsel> fødsler = await client.GetFromJsonAsync<List<DTOGetFødsel>>("Fødsel");
             return fødsler;
         }
+
+        [HttpPost]
+        public async Task<Boolean> PostAsync(DTOFødsel addFodselDTO)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7213/");
+            var result = await client.PostAsJsonAsync<DTOFødsel>("Fødsel", addFodselDTO);
+            return true;
+        }
     }
 }
