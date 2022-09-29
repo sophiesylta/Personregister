@@ -39,6 +39,10 @@ namespace Personregister.Infrastructure.Persistence.Repository
         {
             return personregistercontext.Personer.Where(e => e.Personnummer == personnummer).FirstOrDefault();
         }
+        public Person getPersonByKallenavn(string kallenavn)
+        {
+            return personregistercontext.Personer.Where(e => e.Kallenavn.Equals(kallenavn)).FirstOrDefault();
+        }
 
         public Person edit(Person person)
         {

@@ -11,5 +11,11 @@
 
         public DateTime CreateAt { get; set; } = DateTime.Now;
 
+        public Boolean erSamme(Person person)
+        {
+            if (this.Fornavn != person.Fornavn) return false;
+            if (this.Etternavn != person.Etternavn) return false;
+            return true;
+        }
     }
 }

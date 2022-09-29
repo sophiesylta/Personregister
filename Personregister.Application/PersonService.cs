@@ -66,6 +66,11 @@ namespace Personregister.Application
             return personRepository.getPerson(personnummer);
         }
 
+        public Person getPersonByKallenavn(string kallenavn)
+        {
+            return personRepository.getPersonByKallenavn(kallenavn);
+        }
+
         public DTOEditPerson edit(DTOEditPerson person)
         {
             if (person.fornavn == "" || person.fornavn == null) person.fornavn = "Ukjent";

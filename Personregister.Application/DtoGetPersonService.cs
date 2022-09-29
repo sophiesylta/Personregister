@@ -11,28 +11,30 @@ namespace Personregister.Application
 {
     public class DtoGetPersonService : IDtoGetPersonService
     {
-        private readonly IDødsfallService dødsfallService;
+        private readonly IDødsfallRepository dødsfallRepository;
         private readonly IPersonRepository personRepository;
-        public DtoGetPersonService(IDødsfallService dødsfallService, IPersonRepository personRepository)
+        public DtoGetPersonService(IDødsfallRepository dødsfallRepository, IPersonRepository personRepository)
         {
-            this.dødsfallService = dødsfallService;
+            this.dødsfallRepository = dødsfallRepository;
             this.personRepository = personRepository;
         }
 
         public List<DTOPerson> getAll()
         {
+            List<DTOPerson> dtoPersoner = new();
             
-            var dødsfall = dødsfallService.GetAll();
-            var personer = personRepository.getAll().Select(e => new DTOPerson() { navn = e.Fornavn + " " + e.Etternavn, kallenavn = e.Kallenavn }).ToList();
+            var dødePersoner = dødsfallRepository.GetAll().Select(e => e.person);
 
-            foreach (var d in dødsfall)
+            var personer = personRepository.getAll();
+            foreach (var person in personer)
             {
-                var navn = d.fornavn + " " + d.etternavn;
-                var dødPerson = personer.Where(p => p.navn.Equals(navn)).FirstOrDefault();
-                dødPerson.erDod = true;
+                var dtoPerson = new DTOPerson() { navn = person.Fornavn + " " + person.Etternavn, kallenavn = person.Kallenavn };
+                dtoPerson.erDod = dødePersoner.Any(p => p.erSamme(person));
+
+                dtoPersoner.Add(dtoPerson);
             }
 
-            return personer;
+            return dtoPersoner;
         }
     }
 }

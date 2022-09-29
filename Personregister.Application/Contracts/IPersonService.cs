@@ -26,6 +26,7 @@ namespace Personregister.Application.Contracts
     {
         public Person add(Person person);
         public Person getPerson(long personnummer);
+        Person getPersonByKallenavn(string kallenavn);
         public Person findOrCreate(long personnummer);
     }
 }

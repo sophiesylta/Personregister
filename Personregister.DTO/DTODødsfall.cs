@@ -4,6 +4,7 @@
     {
         public long personnummer { get; set; }
         public string dodsarsak { get; set; }
+        public string kallenavn { get; set; }
         public DateTime dodsTid { get; set; }
     }
 }

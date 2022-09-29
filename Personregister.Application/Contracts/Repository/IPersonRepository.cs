@@ -8,6 +8,7 @@ namespace Personregister.Application.Contracts.Repository
         List<Person> getAll();
         Person add(Person person);
         Person getPerson(long personnummer);
+        Person getPersonByKallenavn(string kallenavn);
         Person edit(Person person);
     }
 }
