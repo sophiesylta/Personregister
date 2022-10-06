@@ -26,16 +26,26 @@ namespace Personregister.Application
         }
         public DTOAddPerson add(DTOAddPerson personDTO)
         {
+            Person person = null;
+            if (personDTO.fodselsnummer.ToString().Length == 6)
+            {
+                var d = personDTO.fodselsnummer.ToString();
+                person = add(new Person(d, personDTO.fornavn, personDTO.etternavn));
 
-            Person person =add(new Person() {Personnummer = personDTO.personnummer, Etternavn = personDTO.etternavn, Fornavn = personDTO.fornavn });
-            personDTO = new DTOAddPerson() { etternavn = person.Etternavn, fornavn = person.Fornavn, personnummer = person.Personnummer };
+            }
+            else
+            {
+                person = add(new Person(personDTO.fodselsnummer) { Etternavn = personDTO.etternavn, Fornavn = personDTO.fornavn });
+            }
+
+            personDTO = new DTOAddPerson() { etternavn = person.Etternavn, fornavn = person.Fornavn, fodselsnummer = Int64.Parse(person._Fødselsnummer)};
             return personDTO;
         }
 
         public Person add(Person person)
         {
             //Sjekke om person eksisterer, i så fall returneres denne, ellers opprett ny
-            if (personRepository.getPerson(person.Personnummer) != null)
+            if (personRepository.getPerson(Int64.Parse(person._Fødselsnummer)) != null)
             {
                 return person;
             }
@@ -51,7 +61,7 @@ namespace Personregister.Application
 
             if (person == null)
             {
-                person = new Person() { Personnummer = personnummer };
+                person = new Person(personnummer);
                 (person.Fornavn, person.Etternavn) = navnService.getNavn(personnummer);
                 add(person);
             }
@@ -73,16 +83,20 @@ namespace Personregister.Application
 
         public DTOEditPerson edit(DTOEditPerson person)
         {
-            if (person.fornavn == "" || person.fornavn == null) person.fornavn = "Ukjent";
-            if (person.etternavn == "" || person.etternavn == null) person.etternavn = "Ukjent";
+            if (person.fornavn == "" || person.fornavn == null) person.fornavn = "IkkeAngittFornavn";
+            if (person.etternavn == "" || person.etternavn == null) person.etternavn = "IkkeAngittEtternavn";
 
             var p = personRepository.getPerson(person.personnummer);
+            if (p == null)
+            {
+                throw new Exception($"Person med fødselsnummer {person.personnummer} finnes ikke");
+            }
             p.Fornavn = person.fornavn;
             p.Etternavn = person.etternavn;
 
             p.Kallenavn = kallenavnService.getUniktKallenavn(person.kallenavn);
             p = personRepository.edit(p);
-            return new DTOEditPerson() { personnummer = p.Personnummer, fornavn = p.Fornavn, etternavn = p.Etternavn, kallenavn = p.Kallenavn };
+            return new DTOEditPerson() { personnummer = Int64.Parse(p._Fødselsnummer), fornavn = p.Fornavn, etternavn = p.Etternavn, kallenavn = p.Kallenavn };
         }
     }
 }

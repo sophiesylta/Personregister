@@ -62,7 +62,7 @@ async Task<Boolean> createFødsel(HttpClient client)
         {
             personnummerMor = 11223344556,
             personnummerFar = 22334455676,
-            barn = new DTOBarn() { Personnummer = 66778899009, Fornavn = "fornavn", Etternavn = "etternavn" }
+            barn = new DTOBarn() { Fodselsdato = "667788", Fornavn = "fornavn", Etternavn = "etternavn" }
         };
 
         var result = await client.PostAsJsonAsync<DTOFødsel>("Fødsel", fødselDTO);
@@ -90,7 +90,7 @@ async Task<Boolean> createFødslerFraFil(HttpClient client, string filnavn)
             {
                 personnummerMor = Convert.ToInt64(data[0]),
                 personnummerFar = Convert.ToInt64(data[1]),
-                barn = new DTOBarn() { Personnummer = Convert.ToInt64(data[2]), Fornavn = data[3], Etternavn = data[4] }
+                barn = new DTOBarn() { Fodselsdato = data[2], Fornavn = data[3], Etternavn = data[4] }
             };
             var result = await client.PostAsJsonAsync<DTOFødsel>("Fødsel", fødselDTO);
 
@@ -118,7 +118,7 @@ async Task<Boolean> createPersonerFraFil(HttpClient client, string filnavn)
 
             DTOAddPerson personDTO = new DTOAddPerson()
             {
-                personnummer = Convert.ToInt64(data[0]),
+                fodselsnummer = Convert.ToInt64(data[0]),
                 fornavn = data[1],
                 etternavn = data[2]
             };

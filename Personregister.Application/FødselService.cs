@@ -24,19 +24,20 @@ namespace Personregister.Application
 
             //Sjekk om far eksisterer, i så fall bruk denne, ellers opprett ny
             Person far = personService.findOrCreate(fødselDTO.personnummerFar);
-        
+            
+            // TODO
             //Sjekk om barn eksisterer, i så fall kast exception
-            var barn = personService.getPerson(fødselDTO.barn.Personnummer);
+            //var barn = personService.getPerson(fødselDTO.barn.Personnummer);
 
-            if (barn != null)
-            {
-                throw new Exception($"Barn finnes med personnummer {fødselDTO.barn.Personnummer} fra før ");
-            }
+            //if (barn != null)
+            //{
+            //    throw new Exception($"Barn finnes med personnummer {fødselDTO.barn.Personnummer} fra før ");
+            //}
 
             //Hvis barnets etternavn ikke er oppgitt skal mors og fars etternavn kombineres
             if (fødselDTO.barn.Etternavn == "") fødselDTO.barn.Etternavn = $"{mor.Etternavn}-{far.Etternavn}";
 
-            barn = new Person() { Fornavn = fødselDTO.barn.Fornavn, Etternavn = fødselDTO.barn.Etternavn, Personnummer = fødselDTO.barn.Personnummer };
+            var barn = new Person(fødselDTO.barn.Fodselsdato, fødselDTO.barn.Fornavn, fødselDTO.barn.Etternavn); //{ Fornavn = fødselDTO.barn.Fornavn, Etternavn = fødselDTO.barn.Etternavn};
 
             personService.add(barn);
 

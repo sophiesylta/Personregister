@@ -29,7 +29,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
         public Dødsfall getDødsfall(long personnummer)
         {
-            return personregistercontext.Dødsfall.Where(e => e.person.Personnummer == personnummer).FirstOrDefault();
+            return personregistercontext.Dødsfall.Where(e => e.person._Fødselsnummer == personnummer.ToString()).FirstOrDefault();
         }
     }
 }

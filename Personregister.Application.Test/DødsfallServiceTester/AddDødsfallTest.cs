@@ -40,7 +40,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             var dødsfall = nyttDødsfall();
             var dødsfallDTO = nyDødsfallDTO();
 
-            personService.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
+            personService.Setup(e => e.getPerson(Int64.Parse(dødsfall.person._Fødselsnummer))).Returns(dødsfall.person);
 
             dødsfall = dødsfallService.add(dødsfallDTO);
 
@@ -69,9 +69,9 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             var dødsfall = nyttDødsfall();
             var dødsfallDTO = nyDødsfallDTO();
 
-            personService.Setup(e => e.getPerson(dødsfall.person.Personnummer)).Returns(dødsfall.person);
+            personService.Setup(e => e.getPerson(Int64.Parse(dødsfall.person._Fødselsnummer))).Returns(dødsfall.person);
 
-            dødsfallRepository.Setup(e => e.getDødsfall(dødsfall.person.Personnummer)).Returns(dødsfall);
+            dødsfallRepository.Setup(e => e.getDødsfall(Int64.Parse(dødsfall.person._Fødselsnummer))).Returns(dødsfall);
 
             dødsfall = dødsfallService.add(dødsfallDTO);
 
@@ -82,9 +82,8 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         {
             Dødsfall dødsfall = new Dødsfall()
             {
-                person = new Person()
+                person = new Person(12312312312)
                 {
-                    Personnummer = 12312312312,
                     Fornavn = "Sophie",
                     Etternavn = "Sylta"
                 },
@@ -99,7 +98,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         {
            DTODødsfall dødsfallDTO = new DTODødsfall()
             {
-                personnummer = nyttDødsfall().person.Personnummer,
+                personnummer = Int64.Parse(nyttDødsfall().person._Fødselsnummer),
                 dodsarsak = nyttDødsfall().dødsårsak,
                 dodsTid = nyttDødsfall().dødsTid
             };

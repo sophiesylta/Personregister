@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Personregister.Domene;
+using System.Runtime.Serialization;
 
 namespace Personregister.Infrastructure.Persistence.Context
 {
@@ -17,7 +18,8 @@ namespace Personregister.Infrastructure.Persistence.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Person>().HasIndex(u => u.Personnummer).IsUnique();
+            modelBuilder.Entity<Person>().Ignore(x => x.Fødselsnummer);
+            modelBuilder.Entity<Person>().HasIndex(u => u._Fødselsnummer).IsUnique();
             modelBuilder.Entity<Person>().HasIndex(e => e.Kallenavn).IsUnique();
         }
 

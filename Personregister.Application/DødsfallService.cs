@@ -51,7 +51,7 @@ namespace Personregister.Application
             };
 
             //sjekk om dødsfall eksisterer, i så fall, returneres dette, ellers opprett nytt
-            var d = dødsfallRepository.getDødsfall(dødsfall.person.Personnummer);
+            var d = dødsfallRepository.getDødsfall(Int64.Parse(dødsfall.person._Fødselsnummer));
 
             if (d != null) 
             {

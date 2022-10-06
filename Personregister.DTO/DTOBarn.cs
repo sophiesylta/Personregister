@@ -10,6 +10,6 @@ namespace Personregister.DTO
     {
         public string Fornavn { get; set; }
         public string Etternavn { get; set; }
-        public long Personnummer { get; set; }
+        public string Fodselsdato { get; set; }
     }
 }

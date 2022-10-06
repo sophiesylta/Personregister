@@ -15,11 +15,11 @@ namespace Personregister.Application
     {
         private readonly IDtoPersonService personService;
         List<long> personnummerListe = new List<long>() { 12312312312, 23423423423, 78978978978 };
-        List<long> barnePersonnummerListe = new List<long> { 34534534534, 45645645645, 56756756756 };
+        List<string> barnePersonnummerListe = new List<string> { "345345", "456456", "567567" };
 
         List<long> andebyenNummerListe = new List<long> { 11111111111, 22222222222, 33333333333 };
         List<string> andebyenNavneLise = new List<string> { "Ole", "Dole", "Doffen" };
-        List<long> andebyenBarnenummer = new List<long> { 44444444444, 55555555555, 66666666666 };
+        List<string> andebyenBarnenummer = new List<string> { "444444", "555555", "666666" };
 
         public InitDataService(IFødselService fødselService, INavnService navnService, IDødsfallService dødsfallService, IDtoPersonService personService)
         {
@@ -27,7 +27,7 @@ namespace Personregister.Application
             foreach (var personnummer in personnummerListe) 
             {
                 (string fornavn, string etternavn) = navnService.getNavn(personnummer);
-                personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, personnummer = personnummer });
+                personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, fodselsnummer = personnummer });
             }
 
             //Legge til fødsler
@@ -39,7 +39,7 @@ namespace Personregister.Application
                     
                     personnummerMor  = personnummerListe[0],
                     personnummerFar = personnummerListe[1] ,
-                    barn = new DTOBarn() { Fornavn = $"barn{barnenummer}", Etternavn = "", Personnummer = personnummer, },
+                    barn = new DTOBarn() { Fornavn = $"barn{barnenummer}", Etternavn = "", Fodselsdato = personnummer, },
                     fødselTid = DateTime.Now.AddYears(-10+barnenummer*2)
                 });
                 barnenummer++;
@@ -58,7 +58,7 @@ namespace Personregister.Application
             foreach (var personnummer in andebyenNummerListe)
             {
                 (string fornavn, string etternavn) = navnService.getNavn(personnummer);
-                personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, personnummer = personnummer });
+                personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, fodselsnummer = personnummer });
             }
 
             var i = 0;
@@ -69,7 +69,7 @@ namespace Personregister.Application
                 {
                     personnummerMor = andebyenNummerListe[0],
                     personnummerFar = andebyenNummerListe[1],
-                    barn = new DTOBarn() { Fornavn = andebyenNavneLise[i], Etternavn = "", Personnummer = personnummer, },
+                    barn = new DTOBarn() { Fornavn = andebyenNavneLise[i], Etternavn = "", Fodselsdato = personnummer, },
                     fødselTid = DateTime.Now.AddYears(-10 + i * 2)
                 });
                 i++;
@@ -79,22 +79,22 @@ namespace Personregister.Application
 
         public void registrerDødsfall(IDødsfallService dødsfallService, INavnService navnService, IDtoPersonService personService)
         {
-            (string fornavn, string etternavn) = navnService.getNavn(andebyenBarnenummer[2]);
-            var person1 = personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, personnummer = andebyenBarnenummer[2] });
+            (string fornavn, string etternavn) = ("Dole", "Duck-Mouse");
+            var person1 = personService.add(new DTOAddPerson() {fornavn = fornavn, etternavn = etternavn, fodselsnummer = Int64.Parse(andebyenBarnenummer[2]) });
 
             dødsfallService.add(new DTODødsfall()
             {
-                personnummer = person1.personnummer,
+                personnummer = person1.fodselsnummer,
                 dodsTid = new DateTime(2022, 12, 24, 7, 0, 0),
                 dodsarsak = "Sjelden genetisk sykdom" 
             });
 
             (fornavn, etternavn) = navnService.getNavn(andebyenNummerListe[1]);
-            var person2 = personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, personnummer = andebyenNummerListe[1] });
+            var person2 = personService.add(new DTOAddPerson() { fornavn = fornavn, etternavn = etternavn, fodselsnummer = andebyenNummerListe[1] });
 
             dødsfallService.add(new DTODødsfall()
             {
-                personnummer = person2.personnummer,
+                personnummer = person2.fodselsnummer,
                 dodsTid = new DateTime(2022, 12, 27, 13, 10, 22),
                 dodsarsak = "Sorg" 
             });

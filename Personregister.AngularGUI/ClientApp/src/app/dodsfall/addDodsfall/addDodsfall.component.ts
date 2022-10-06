@@ -31,5 +31,6 @@ export class DTODodsfall
 {
   personnummer: number = 0;
   dodsarsak: string = "";
+  kallenavn: string = "";
   dodsTid: Date = new Date();
 }

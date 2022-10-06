@@ -27,5 +27,5 @@ export class AddPersonComponent {
 export class DTOAddPerson {
   fornavn: string = "";
   etternavn: string = "";
-  personnummer: number = 0;
+  fodselsnummer: number = 0;
 }

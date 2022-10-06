@@ -8,7 +8,7 @@ namespace Personregister.DTO
 {
     public class DTOAddPerson
     {
-        public long personnummer { get; set; }
+        public long fodselsnummer { get; set; }
         public string fornavn { get; set; }
         public string etternavn { get; set; }
 

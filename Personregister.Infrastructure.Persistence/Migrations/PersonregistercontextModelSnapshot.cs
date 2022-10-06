@@ -99,14 +99,18 @@ namespace Personregister.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Kallenavn")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<long>("Personnummer")
-                        .HasColumnType("bigint");
+                    b.Property<string>("_Fødselsnummer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PersonId");
 
-                    b.HasIndex("Personnummer")
+                    b.HasIndex("Kallenavn")
+                        .IsUnique();
+
+                    b.HasIndex("_Fødselsnummer")
                         .IsUnique();
 
                     b.ToTable("Personer");

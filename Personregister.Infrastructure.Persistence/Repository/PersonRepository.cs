@@ -37,7 +37,7 @@ namespace Personregister.Infrastructure.Persistence.Repository
 
         public Person getPerson(long personnummer)
         {
-            return personregistercontext.Personer.Where(e => e.Personnummer == personnummer).FirstOrDefault();
+            return personregistercontext.Personer.Where(e => e._Fødselsnummer.Equals (personnummer.ToString())).FirstOrDefault();
         }
         public Person getPersonByKallenavn(string kallenavn)
         {

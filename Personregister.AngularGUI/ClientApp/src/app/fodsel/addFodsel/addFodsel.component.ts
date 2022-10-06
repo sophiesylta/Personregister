@@ -27,11 +27,11 @@ export class DTOAddFodsel {
   personnummerMor: number= 0;
   personnummerFar: number = 0;
   barn: DTOBarn = new DTOBarn;
-  fodselsdato: Date = new Date();
+  fodselTid: Date = new Date();
 }
 export class DTOBarn {
   fornavn: string = "";
   etternavn: string = "";
-  personnummer: number = 0;
+  fodselsdato: string = "";
 }
 

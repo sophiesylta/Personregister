@@ -24,17 +24,15 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
         [Trait("PersonRepository", "PersonRepository")]
         public void GetAllePersonerTest()
         {
-            Person person1 = new Person()
+            Person person1 = new Person(78945612312)
             {
-                Personnummer = 78945612312,
                 Fornavn = "fornavn1",
                 Etternavn = "etternavn1"
             };
             personRepository.add(person1);
 
-            Person person2 = new Person()
+            Person person2 = new Person(78978945645)
             {
-                Personnummer = 78978945645,
                 Fornavn = "fornavn2",
                 Etternavn = "etternavn2"
             };

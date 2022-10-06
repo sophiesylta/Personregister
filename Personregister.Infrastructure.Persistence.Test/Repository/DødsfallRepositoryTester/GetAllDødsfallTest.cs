@@ -27,7 +27,7 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
             Dødsfall dødsfall = new Dødsfall()
             {
                 dødsårsak="",
-                person=new Person() { CreateAt = DateTime.Now , Fornavn="",Etternavn="" },
+                person=new Person("22.01.90") { CreateAt = DateTime.Now , Fornavn="",Etternavn="" },
             };
             dødsfallRepository.add(dødsfall);
 

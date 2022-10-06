@@ -47,9 +47,8 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
             long personnnummer = 11111111111;
             for(int i=0;i<antall;i++)
             {
-                Person person = new Person()
+                Person person = new Person(personnnummer)
                 {
-                    Personnummer = personnnummer,
                     Fornavn = "",
                     Etternavn = ""
                 };
@@ -76,11 +75,10 @@ namespace Personregister.Infrastructure.Persistence.Test.Repository.DødsfallRepo
 
         public Person nyPerson()
         {
-            var person = new Person()
+            var person = new Person(77889944556)
             {
                 Fornavn = "Donald",
                 Etternavn = "Duck",
-                Personnummer = 77889944556
             };
             return person;
             
