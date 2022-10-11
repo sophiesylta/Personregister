@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Optional;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
 using Personregister.Infrastructure.Persistence.Context;
@@ -27,9 +28,9 @@ namespace Personregister.Infrastructure.Persistence.Repository
             return personregistercontext.Dødsfall.Include(d => d.person).ToList();
         }
 
-        public Dødsfall getDødsfall(long personnummer)
+        public Option<Dødsfall> getDødsfall(long personnummer)
         {
-            return personregistercontext.Dødsfall.FirstOrDefault(e => e.person._Fødselsnummer == personnummer.ToString())!;
+            return personregistercontext.Dødsfall.FirstOrDefault(e => e.person._Fødselsnummer == personnummer.ToString())!.SomeNotNull();
         }
     }
 }

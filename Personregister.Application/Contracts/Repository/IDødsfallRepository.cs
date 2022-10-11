@@ -1,4 +1,5 @@
-﻿using Personregister.Domene;
+﻿using Optional;
+using Personregister.Domene;
 
 namespace Personregister.Application.Contracts.Repository
 {
@@ -6,6 +7,6 @@ namespace Personregister.Application.Contracts.Repository
     {
         List<Dødsfall> GetAll();
         Dødsfall add(Dødsfall dødsfall);
-        Dødsfall getDødsfall(long personnummer);
+        Option<Dødsfall> getDødsfall(long personnummer);
     }
 }

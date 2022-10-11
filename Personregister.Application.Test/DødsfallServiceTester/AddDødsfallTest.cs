@@ -3,6 +3,7 @@ using Personregister.Application.Contracts.Repository;
 using Personregister.Application.Contracts;
 using Personregister.Domene;
 using Microsoft.Extensions.Logging;
+using Optional;
 using Personregister.DTO;
 
 namespace Personregister.Application.Test.DødsfallServiceTester
@@ -44,7 +45,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             };
 
             personService.Setup(e => e.getPerson(Int64.Parse(person._Fødselsnummer))).Returns(person);
-            dødsfallRepository.Setup(e => e.getDødsfall(Int64.Parse(person._Fødselsnummer))).Returns(value: null);
+            dødsfallRepository.Setup(e => e.getDødsfall(Int64.Parse(person._Fødselsnummer))).Returns(Option.None<Dødsfall>());
             dødsfallRepository.Setup(e => e.add(It.IsAny<Dødsfall>())).Returns(lagretDødsfall);
 
             var addedDødsfall = dødsfallService.add(dødsfallDto);
@@ -82,7 +83,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
 
             personService.Setup(e => e.getPerson(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall.person);
 
-            dødsfallRepository.Setup(e => e.getDødsfall(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall);
+            dødsfallRepository.Setup(e => e.getDødsfall(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall.SomeNotNull);
 
             Dødsfall addedDødsfall = dødsfallService.add(dødsfallDTO);
 

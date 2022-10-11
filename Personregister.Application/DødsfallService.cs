@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Optional;
 using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
@@ -22,7 +23,7 @@ namespace Personregister.Application
 
         public Dødsfall add(DTODødsfall dødsfallDTO)
         {
-            Person person = null;
+            Person person;
 
             //Sjekk om DTO har verdi for personnummer, i så fall sjekk om person eksisterer
             if (dødsfallDTO.personnummer != 0)
@@ -43,7 +44,7 @@ namespace Personregister.Application
             }
 
             //Oppretter dødsfall fra DTO
-            var dødsfall = new Dødsfall()
+            var dødsfall = new Dødsfall
             {
                 person = person,
                 dødsårsak = dødsfallDTO.dodsarsak,
@@ -51,15 +52,16 @@ namespace Personregister.Application
             };
 
             //sjekk om dødsfall eksisterer, i så fall, returneres dette, ellers opprett nytt
-            var d = dødsfallRepository.getDødsfall(Int64.Parse(dødsfall.person._Fødselsnummer));
-
-            if (d != null) 
-            {
-                logger.LogError("Dødsfall allerede registrert");
-                return d;
-            }
-
-            return dødsfallRepository.add(dødsfall);
+            Option<Dødsfall> d = dødsfallRepository.getDødsfall(Int64.Parse(dødsfall.person._Fødselsnummer));
+            Dødsfall registrertDødsfall = d.Match(
+                df =>
+                {
+                    logger.LogError("Dødsfall allerede registrert");
+                    return df;
+                },
+                () => dødsfallRepository.add(dødsfall)
+            );
+            return registrertDødsfall;
         }
 
         public List<DTOGetDødsfall> GetAll()
