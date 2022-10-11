@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Personregister.Domene;
-using System.Runtime.Serialization;
 
 namespace Personregister.Infrastructure.Persistence.Context
 {
@@ -9,11 +8,12 @@ namespace Personregister.Infrastructure.Persistence.Context
 
         public Personregistercontext(DbContextOptions<Personregistercontext> options) : base(options) { }
 
-        public DbSet<Person> Personer { get; set; }
+        // Initialiser DbSet-ene med null-forgiving operator for å fjerne compiler warning CS8618, vi vet at base-konstruktøren initialiserer disse DbSet-ene!
+        public DbSet<Person> Personer { get; set; } = null!;
 
-        public DbSet<Fødsel> Fødsler { get; set; }
+        public DbSet<Fødsel> Fødsler { get; set; } = null!;
 
-        public DbSet<Dødsfall> Dødsfall { get; set; }
+        public DbSet<Dødsfall> Dødsfall => Set<Dødsfall>(); // Alternativ til null-forgiving operator
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
