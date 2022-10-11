@@ -56,12 +56,10 @@ namespace Personregister.Application
             if (d != null) 
             {
                 logger.LogError("Dødsfall allerede registrert");
-                return dødsfall;
+                return d;
             }
 
-            dødsfallRepository.add(dødsfall);
-            return dødsfall;
-          
+            return dødsfallRepository.add(dødsfall);
         }
 
         public List<DTOGetDødsfall> GetAll()

@@ -50,8 +50,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             var addedDødsfall = dødsfallService.add(dødsfallDto);
 
             dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Once);
-
-            Assert.NotNull(addedDødsfall);
+            Assert.Equal(lagretDødsfall, addedDødsfall);
         }
 
         [Fact]
@@ -73,16 +72,24 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         [Trait("DødsfallService", "DødsfallService")]
         public void TestDødsfallEksistererFraFør()
         {
-            var dødsfall = nyttDødsfall();
-            var dødsfallDTO = nyDødsfallDTO();
+            var eksisterendeDødsfall = nyttDødsfall();
+            var dødsfallDTO = new DTODødsfall
+            {
+                personnummer = Int64.Parse(eksisterendeDødsfall.person._Fødselsnummer),
+                dodsarsak = "velkjent i morgen",
+                dodsTid = eksisterendeDødsfall.dødsTid.AddDays(1)
+            };
 
-            personService.Setup(e => e.getPerson(Int64.Parse(dødsfall.person._Fødselsnummer))).Returns(dødsfall.person);
+            personService.Setup(e => e.getPerson(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall.person);
 
-            dødsfallRepository.Setup(e => e.getDødsfall(Int64.Parse(dødsfall.person._Fødselsnummer))).Returns(dødsfall);
+            dødsfallRepository.Setup(e => e.getDødsfall(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall);
 
-            dødsfall = dødsfallService.add(dødsfallDTO);
+            Dødsfall addedDødsfall = dødsfallService.add(dødsfallDTO);
 
+            // Verifiser at IDødsfallRepository.add() ikke har blitt kalt
             dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Never);
+            // Verifiser at det returnerte dødsfallet er det eksisterende, ikke det nye
+            Assert.Equal(eksisterendeDødsfall, addedDødsfall);
         }
 
         private Dødsfall nyttDødsfall() 
