@@ -1,10 +1,6 @@
 ﻿using Personregister.Domene;
 using Personregister.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Optional;
 
 namespace Personregister.Application.Contracts
 {
@@ -25,8 +21,8 @@ namespace Personregister.Application.Contracts
     public interface IPersonService
     {
         public Person add(Person person);
-        public Person getPerson(long personnummer);
-        Person getPersonByKallenavn(string kallenavn);
+        public Option<Person> getPerson(long personnummer);
+        public Option<Person> getPersonByKallenavn(string kallenavn);
         public Person findOrCreate(long personnummer);
     }
 }

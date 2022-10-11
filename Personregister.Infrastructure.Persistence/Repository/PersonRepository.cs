@@ -1,8 +1,6 @@
-﻿using Personregister.Application;
-using Personregister.Application.Contracts;
+﻿using Optional;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
-using Personregister.DTO;
 using Personregister.Infrastructure.Persistence.Context;
 
 namespace Personregister.Infrastructure.Persistence.Repository
@@ -39,9 +37,15 @@ namespace Personregister.Infrastructure.Persistence.Repository
         {
             return personregistercontext.Personer.Where(e => e._Fødselsnummer.Equals (personnummer.ToString())).FirstOrDefault();
         }
-        public Person getPersonByKallenavn(string kallenavn)
+
+        public Option<Person> getPersonOptional(long personnummer)
         {
-            return personregistercontext.Personer.Where(e => e.Kallenavn.Equals(kallenavn)).FirstOrDefault();
+            return personregistercontext.Personer.FirstOrDefault(e => e._Fødselsnummer.Equals(personnummer.ToString())).SomeNotNull()!;
+        }
+
+        public Option<Person> getPersonByKallenavn(string kallenavn)
+        {
+            return personregistercontext.Personer.FirstOrDefault(e => e.Kallenavn.Equals(kallenavn)).SomeNotNull()!;
         }
 
         public Person edit(Person person)

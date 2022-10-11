@@ -2,11 +2,7 @@
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
 using Personregister.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Optional;
 
 namespace Personregister.Application
 {
@@ -57,7 +53,7 @@ namespace Personregister.Application
 
         public Person findOrCreate(long personnummer)
         {
-            var person = getPerson(personnummer);
+            var person = personRepository.getPerson(personnummer);
 
             if (person == null)
             {
@@ -71,12 +67,12 @@ namespace Personregister.Application
 
 
 
-        public Person getPerson(long personnummer)
+        public Option<Person> getPerson(long personnummer)
         {
-            return personRepository.getPerson(personnummer);
+            return personRepository.getPersonOptional(personnummer);
         }
 
-        public Person getPersonByKallenavn(string kallenavn)
+        public Option<Person> getPersonByKallenavn(string kallenavn)
         {
             return personRepository.getPersonByKallenavn(kallenavn);
         }

@@ -1,5 +1,5 @@
-﻿using Personregister.Domene;
-using Personregister.DTO;
+﻿using Optional;
+using Personregister.Domene;
 
 namespace Personregister.Application.Contracts.Repository
 {
@@ -8,7 +8,8 @@ namespace Personregister.Application.Contracts.Repository
         List<Person> getAll();
         Person add(Person person);
         Person getPerson(long personnummer);
-        Person getPersonByKallenavn(string kallenavn);
+        Option<Person> getPersonOptional(long personnummer);
+        Option<Person> getPersonByKallenavn(string kallenavn);
         Person edit(Person person);
     }
 }

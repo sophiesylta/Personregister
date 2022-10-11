@@ -23,25 +23,27 @@ namespace Personregister.Application
 
         public Dødsfall add(DTODødsfall dødsfallDTO)
         {
-            Person person;
+            Option<Person> personOpt;
 
             //Sjekk om DTO har verdi for personnummer, i så fall sjekk om person eksisterer
             if (dødsfallDTO.personnummer != 0)
             {
-                person = personService.getPerson(dødsfallDTO.personnummer);
+                personOpt = personService.getPerson(dødsfallDTO.personnummer);
             }
             //Bruker DTO sin verdi for kallenavn for å sjekke om person eksisterer
             else
             {
-                person = personService.getPersonByKallenavn(dødsfallDTO.kallenavn);
+                personOpt = personService.getPersonByKallenavn(dødsfallDTO.kallenavn);
             }
 
             //Hvis person ikke eksisterer, kast exception
-            if (person == null)
-            {
-                logger.LogError("Finner ikke person ");
-                throw new Exception("Finner ikke person");
-            }
+            Person person = personOpt.Match(
+                p => p,
+                () =>
+                {
+                    logger.LogError("Finner ikke person ");
+                    throw new Exception("Finner ikke person");
+                });
 
             //Oppretter dødsfall fra DTO
             var dødsfall = new Dødsfall

@@ -44,7 +44,41 @@ namespace Personregister.Application.Test.DødsfallServiceTester
                 person = person
             };
 
-            personService.Setup(e => e.getPerson(Int64.Parse(person._Fødselsnummer))).Returns(person);
+            personService.Setup(e => e.getPerson(Int64.Parse(person._Fødselsnummer))).Returns(person.SomeNotNull);
+            dødsfallRepository.Setup(e => e.getDødsfall(Int64.Parse(person._Fødselsnummer))).Returns(Option.None<Dødsfall>());
+            dødsfallRepository.Setup(e => e.add(It.IsAny<Dødsfall>())).Returns(lagretDødsfall);
+
+            var addedDødsfall = dødsfallService.add(dødsfallDto);
+
+            dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Once);
+            Assert.Equal(lagretDødsfall, addedDødsfall);
+        }
+
+        [Fact]
+        [Trait("DødsfallService", "DødsfallService")]
+        public void TestNyttDødsfallPersonMedKallenavn()
+        {
+            const string kallenavn = "sosu";
+            var person = nyPerson();
+            person.Kallenavn = kallenavn;
+
+            var dødsfallDto = new DTODødsfall
+            {
+                personnummer = 0,
+                kallenavn = kallenavn,
+                dodsarsak = "Covid19",
+                dodsTid = DateTime.Now.AddDays(-1)
+            };
+
+            var lagretDødsfall = new Dødsfall
+            {
+                DødsfallId = 99,
+                dødsTid = dødsfallDto.dodsTid,
+                dødsårsak = dødsfallDto.dodsarsak,
+                person = person
+            };
+
+            personService.Setup(e => e.getPersonByKallenavn(kallenavn)).Returns(person.SomeNotNull);
             dødsfallRepository.Setup(e => e.getDødsfall(Int64.Parse(person._Fødselsnummer))).Returns(Option.None<Dødsfall>());
             dødsfallRepository.Setup(e => e.add(It.IsAny<Dødsfall>())).Returns(lagretDødsfall);
 
@@ -60,7 +94,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         {
             var dødsfallDTO = nyDødsfallDTO();
 
-            personService.Setup(e => e.getPerson(dødsfallDTO.personnummer)).Returns(value: null);
+            personService.Setup(e => e.getPerson(dødsfallDTO.personnummer)).Returns(Option.None<Person>());
 
             // Sjekker at riktig feilmelding blir kastet når personen ikke finnes fra før
             var ex = Assert.Throws<Exception>(()=> dødsfallService.add(dødsfallDTO));
@@ -81,7 +115,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
                 dodsTid = eksisterendeDødsfall.dødsTid.AddDays(1)
             };
 
-            personService.Setup(e => e.getPerson(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall.person);
+            personService.Setup(e => e.getPerson(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall.person.SomeNotNull);
 
             dødsfallRepository.Setup(e => e.getDødsfall(dødsfallDTO.personnummer)).Returns(eksisterendeDødsfall.SomeNotNull);
 
@@ -109,7 +143,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             {
                 personnummer = Int64.Parse(nyPerson()._Fødselsnummer),
                 dodsarsak = nyttDødsfall().dødsårsak,
-                dodsTid = nyttDødsfall().dødsTid
+                dodsTid = DateTime.Now
             };
         }
 
