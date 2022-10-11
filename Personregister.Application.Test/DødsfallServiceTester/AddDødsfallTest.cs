@@ -1,11 +1,6 @@
 ﻿using Moq;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Application.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Personregister.Domene;
 using Microsoft.Extensions.Logging;
 using Personregister.DTO;
@@ -14,7 +9,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
 {
     public class AddDødsfallTest
     {
-        DødsfallService dødsfallService;
+        IDødsfallService dødsfallService;
         Mock<IDødsfallRepository> dødsfallRepository;
         Mock<IPersonService> personService;
         Mock<ILogger<DødsfallService>> logger;
@@ -22,7 +17,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
 
         public AddDødsfallTest()
         {
-            dødsfallRepository = new Mock<IDødsfallRepository>();
+            dødsfallRepository = new Mock<IDødsfallRepository>(MockBehavior.Strict);
             personService = new Mock<IPersonService>();
             //trenger ikke mocke navnService , da den ikke har avhenigheter...
             INavnService navnService = new NavnService();
@@ -37,16 +32,26 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         [Trait("DødsfallService", "DødsfallService")]
         public void TestDødsfallService()
         {
-            var dødsfall = nyttDødsfall();
-            var dødsfallDTO = nyDødsfallDTO();
+            var person = nyPerson();
+            var dødsfallDto = nyDødsfallDTO();
 
-            personService.Setup(e => e.getPerson(Int64.Parse(dødsfall.person._Fødselsnummer))).Returns(dødsfall.person);
+            var lagretDødsfall = new Dødsfall
+            {
+                DødsfallId = 99,
+                dødsTid = dødsfallDto.dodsTid,
+                dødsårsak = dødsfallDto.dodsarsak,
+                person = person
+            };
 
-            dødsfall = dødsfallService.add(dødsfallDTO);
+            personService.Setup(e => e.getPerson(Int64.Parse(person._Fødselsnummer))).Returns(person);
+            dødsfallRepository.Setup(e => e.getDødsfall(Int64.Parse(person._Fødselsnummer))).Returns(value: null);
+            dødsfallRepository.Setup(e => e.add(It.IsAny<Dødsfall>())).Returns(lagretDødsfall);
+
+            var addedDødsfall = dødsfallService.add(dødsfallDto);
 
             dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Once);
 
-            Assert.NotNull(dødsfall);
+            Assert.NotNull(addedDødsfall);
         }
 
         [Fact]
@@ -78,32 +83,33 @@ namespace Personregister.Application.Test.DødsfallServiceTester
             dødsfallRepository.Verify(e => e.add(It.IsAny<Dødsfall>()), Times.Never);
         }
 
-        public Dødsfall nyttDødsfall() 
+        private Dødsfall nyttDødsfall() 
         {
-            Dødsfall dødsfall = new Dødsfall()
+            return new Dødsfall
             {
-                person = new Person(12312312312)
-                {
-                    Fornavn = "Sophie",
-                    Etternavn = "Sylta"
-                },
+                person = nyPerson(),
                 dødsårsak = "ukjent",
                 dødsTid = DateTime.Now
             };
-
-            return dødsfall;
         }
 
-        public DTODødsfall nyDødsfallDTO() 
+        private DTODødsfall nyDødsfallDTO() 
         {
-           DTODødsfall dødsfallDTO = new DTODødsfall()
+            return new DTODødsfall
             {
-                personnummer = Int64.Parse(nyttDødsfall().person._Fødselsnummer),
+                personnummer = Int64.Parse(nyPerson()._Fødselsnummer),
                 dodsarsak = nyttDødsfall().dødsårsak,
                 dodsTid = nyttDødsfall().dødsTid
             };
+        }
 
-            return dødsfallDTO;
+        private Person nyPerson()
+        {
+            return new Person(12312312312)
+            {
+                Fornavn = "Sophie",
+                Etternavn = "Sylta"
+            };
         }
     }
 }
