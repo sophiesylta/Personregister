@@ -18,7 +18,7 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         public AddDødsfallTest()
         {
             dødsfallRepository = new Mock<IDødsfallRepository>(MockBehavior.Strict);
-            personService = new Mock<IPersonService>();
+            personService = new Mock<IPersonService>(MockBehavior.Strict);
             //trenger ikke mocke navnService , da den ikke har avhenigheter...
             INavnService navnService = new NavnService();
             logger = new Mock<ILogger<DødsfallService>>();
@@ -59,7 +59,9 @@ namespace Personregister.Application.Test.DødsfallServiceTester
         public void TestDødsfallPersonFinnesIkke() 
         {
             var dødsfallDTO = nyDødsfallDTO();
-            
+
+            personService.Setup(e => e.getPerson(dødsfallDTO.personnummer)).Returns(value: null);
+
             // Sjekker at riktig feilmelding blir kastet når personen ikke finnes fra før
             var ex = Assert.Throws<Exception>(()=> dødsfallService.add(dødsfallDTO));
 
