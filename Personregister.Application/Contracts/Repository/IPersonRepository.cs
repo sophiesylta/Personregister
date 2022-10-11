@@ -7,6 +7,7 @@ namespace Personregister.Application.Contracts.Repository
     {
         List<Person> getAll();
         Person add(Person person);
+        // TODO: Fjern getPerson() og rename getPersonOptional() til getPerson()
         Person getPerson(long personnummer);
         Option<Person> getPersonOptional(long personnummer);
         Option<Person> getPersonByKallenavn(string kallenavn);

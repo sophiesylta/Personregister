@@ -41,6 +41,7 @@ namespace Personregister.Application
         public Person add(Person person)
         {
             //Sjekke om person eksisterer, i så fall returneres denne, ellers opprett ny
+            // TODO: Kall getPersonOptional og bruk Option.Match
             if (personRepository.getPerson(Int64.Parse(person._Fødselsnummer)) != null)
             {
                 return person;
@@ -53,6 +54,7 @@ namespace Personregister.Application
 
         public Person findOrCreate(long personnummer)
         {
+            // TODO: Kall IPersonRepository.getPersonOptional og bruk Option.Match
             var person = personRepository.getPerson(personnummer);
 
             if (person == null)
@@ -82,6 +84,7 @@ namespace Personregister.Application
             if (person.fornavn == "" || person.fornavn == null) person.fornavn = "IkkeAngittFornavn";
             if (person.etternavn == "" || person.etternavn == null) person.etternavn = "IkkeAngittEtternavn";
 
+            // TODO: Kall getPersonOptional og bruk Option.Match
             var p = personRepository.getPerson(person.personnummer);
             if (p == null)
             {
