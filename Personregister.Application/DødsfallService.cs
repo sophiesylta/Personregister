@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Optional;
+using Optional.Unsafe;
 using Personregister.Application.Contracts;
 using Personregister.Application.Contracts.Repository;
 using Personregister.Domene;
@@ -44,6 +45,11 @@ namespace Personregister.Application
                     logger.LogError("Finner ikke person ");
                     throw new Exception("Finner ikke person");
                 });
+
+/* Alternativ hvis feilen ikke skal logges:
+
+            person = personOpt.ValueOrFailure("Finner ikke person");    // Kaster OptionValueMissingException med melding "Finner ikke person" hvis verdien er None
+*/
 
             //Oppretter dødsfall fra DTO
             var dødsfall = new Dødsfall
